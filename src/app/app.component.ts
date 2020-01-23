@@ -1,10 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'test';
+export class AppComponent implements OnInit {
+    today = new Date();
+    password: string;
+    constructor(
+        private router: Router
+        , private route: ActivatedRoute
+    ) {
+
+    }
+
+    ngOnInit() {
+
+    }
+
+    onClickToNavigate(type: 'start' | 'read' | 'admin') {
+        switch (type) {
+            case 'admin':
+                if (this.password === 'electronpassword') {
+                    this.navigateTo('admin-tools');
+                }
+                break;
+            case 'read':
+                break;
+            case 'start':
+                this.navigateTo('question');
+        }
+    }
+
+    navigateTo(path: string) {
+        this.router.navigate([path]);
+    }
 }
