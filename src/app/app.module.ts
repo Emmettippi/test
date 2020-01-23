@@ -13,7 +13,7 @@ import { QuestionGeneratorComponent } from './components/question-generator/ques
 import { JsonGetterService } from './services/json-getter.service';
 import { IdGetterService } from './services/id-getter.service';
 
-import { routes } from './app.route';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
     declarations: [
@@ -26,7 +26,7 @@ import { routes } from './app.route';
     imports: [
         BrowserModule
         , FormsModule
-        , RouterModule.forChild(routes)
+        , AppRoutingModule
     ],
     providers: [
         HttpClient

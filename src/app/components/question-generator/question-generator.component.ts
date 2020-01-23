@@ -121,6 +121,8 @@ export class QuestionGeneratorComponent implements OnInit {
             index = i;
         };
         this.doForAnswer(questionId, callback);
-        this.answers.splice(index, 1);
+        if (index) {
+
+        }
     }
 }

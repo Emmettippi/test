@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.router.navigate([{ outlets: { content: 'entry' } }], { relativeTo: this.route, skipLocationChange: true });
+        this.router.navigate(["/entry"]);
     }
 }
