@@ -10,7 +10,7 @@ function createWindow() {
         height: 600
     });
     win.loadURL(url.format({
-        pathname: path.join(__dirname, "/../../dist/angular-electron/index.html"),
+        pathname: path.join(__dirname, "/../../dist/test/index.html"),
         protocol: 'file:',
         slashes: true,
     }));
