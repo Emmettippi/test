@@ -7,34 +7,13 @@ import { Router, ActivatedRoute } from '@angular/router';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    today = new Date();
-    password: string;
-    constructor(
-        private router: Router
-        , private route: ActivatedRoute
-    ) {
 
-    }
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute
+    ) { }
 
     ngOnInit() {
-
-    }
-
-    onClickToNavigate(type: 'start' | 'read' | 'admin') {
-        switch (type) {
-            case 'admin':
-                if (this.password === 'electronpassword') {
-                    this.navigateTo('admin-tools');
-                }
-                break;
-            case 'read':
-                break;
-            case 'start':
-                this.navigateTo('question');
-        }
-    }
-
-    navigateTo(path: string) {
-        this.router.navigate([path]);
+        this.router.navigate([{ outlets: { content: 'entry' } }], { relativeTo: this.route, skipLocationChange: true });
     }
 }

@@ -2,15 +2,18 @@ import { Routes } from '@angular/router';
 import { AppComponent } from "./app.component";
 import { QuestionGeneratorComponent } from './components/question-generator/question-generator.component';
 import { QuestionComponent } from './components/question/question.component';
+import { EntryComponent } from './components/entry/entry.component';
 
-export const routes: Routes = [
+const subroutes: Routes = [
     {
-        path: '',
-        component: AppComponent
+        path: 'entry',
+        component: EntryComponent,
+        outlet: 'content'
     },
     {
         path: 'admin-tools',
-        component: QuestionGeneratorComponent
+        component: QuestionGeneratorComponent,
+        outlet: 'content'
     },
     // {
     //     path: 'read',
@@ -18,10 +21,22 @@ export const routes: Routes = [
     // },
     {
         path: 'question/:id',
-        component: QuestionComponent
+        component: QuestionComponent,
+        outlet: 'content'
     },
     {
         path: 'question',
-        component: QuestionComponent
+        component: QuestionComponent,
+        outlet: 'content'
+    }
+];
+
+export const routes: Routes = [
+    {
+        path: '',
+        component: AppComponent,
+        children: [
+            ...subroutes
+        ]
     }
 ];

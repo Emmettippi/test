@@ -5,10 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { EntryComponent } from './components/entry/entry.component';
 import { QuestionComponent } from './components/question/question.component';
 import { JumperComponent } from './components/jumper/jumper.component';
-import { JsonGetterService } from './services/json-getter.service';
 import { QuestionGeneratorComponent } from './components/question-generator/question-generator.component';
+
+import { JsonGetterService } from './services/json-getter.service';
 import { IdGetterService } from './services/id-getter.service';
 
 import { routes } from './app.route';
@@ -16,6 +18,7 @@ import { routes } from './app.route';
 @NgModule({
     declarations: [
         AppComponent
+        , EntryComponent
         , QuestionComponent
         , JumperComponent
         , QuestionGeneratorComponent
@@ -23,12 +26,15 @@ import { routes } from './app.route';
     imports: [
         BrowserModule
         , FormsModule
-        , RouterModule.forRoot(routes, { enableTracing: true })
+        , RouterModule.forChild(routes)
     ],
     providers: [
         HttpClient
         , JsonGetterService
         , IdGetterService
+    ],
+    exports: [
+        RouterModule
     ],
     bootstrap: [AppComponent]
 })

@@ -1,0 +1,25 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+    <h1>
+        Verifica del giorno {{ today | date: 'dd/MM/yyyy'}}
+    </h1>
+</div>
+<h2>Azioni disponibili</h2>
+<ul>
+    <li>
+        <button type="button" class="btn btn-primary" (click)="onClickToNavigate('start')">Inizia</button>
+    </li>
+    <li>
+        <button type="button" class="btn btn-light" (click)="onClickToNavigate('read')">
+            Leggi le modalità di valutazione
+        </button>
+    </li>
+    <li>
+        <button type="button" class="btn btn-light" (click)="onClickToNavigate('admin')">
+            Strumenti amministrativi
+        </button>
+    </li>
+    <li>
+        <input type="password" [(ngModel)]="password" />
+    </li>
+</ul>
