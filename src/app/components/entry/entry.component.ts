@@ -20,7 +20,7 @@ export class EntryComponent extends BaseComponent implements OnInit {
     ngOnInit() {
     }
 
-    onClickToNavigate(type: 'start' | 'read' | 'admin') {
+    onClickToNavigate(type: 'start' | 'read' | 'admin' | 'check') {
         switch (type) {
             case 'admin':
                 if (true || this.password === 'electronpassword') {
@@ -31,6 +31,10 @@ export class EntryComponent extends BaseComponent implements OnInit {
                 break;
             case 'start':
                 this.navigateTo('question');
+                break;
+            case 'check':
+                this.navigateTo('check');
+                break;
         }
     }
 }

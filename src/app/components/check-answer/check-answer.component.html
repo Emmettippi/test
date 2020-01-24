@@ -6,8 +6,18 @@
 </div>
 <div class="container">
     <div class="row">
+        <div class=" col-1">
+            <button type="button" class="btn btn-primary" (click)="navigateTo('/entry');">
+                Indietro
+            </button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-primary" (click)="readFilesAndConfront()">
+                Calcola
+            </button>
+        </div>
         <div class="col-3">
-            <input type="file" (change)="loadAFile($event)" />
+            <input type="file" (change)="loadQFile($event)" />
             Importa Domande
         </div>
         <div class="col-3">
@@ -18,13 +28,48 @@
             <input type="file" (change)="loadSAFile($event)" />
             Risposte Studente
         </div>
-        <div class="col-3">
-            <button type="button" class="btn btn-primary" (click)="readFilesAndConfront()">
-                Calcola
-            </button>
-        </div>
     </div>
     <div class="row">
-
+        <div class="col-4">
+            <h3>Punteggio: {{points}}</h3>
+        </div>
+        <div class="col-4">
+            <h3>Massimo: {{total}}</h3>
+        </div>
+        <div class="col-4">
+            <h3>Voto: {{mark}}</h3>
+        </div>
     </div>
+    <ng-container *ngIf="questions && questions.length">
+        <div class="row" *ngFor="let q of questions; let qIndex = index">
+            <div class="col-4">
+                <h5> {{q.question}} </h5>
+            </div>
+            <div *ngIf="q.type === 'multi'" class="col-4">
+                <div class="row" *ngFor="let a of q.answers; let aIndex = index">
+                    <div class="col-4">
+                        <ng-container *ngIf="getStudentAnswerByQuestionId(q.id).answers[aIndex]">
+                            <div class="alert" role="alert"
+                                [ngClass]="checkedCorrect(qIndex, aIndex) ? 'alert-success' : 'alert-danger'">
+                                <span class="glyphicon" aria-hidden="true"
+                                    [ngClass]="checkedCorrect(qIndex, aIndex) ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
+                                <span class="sr-only">Error:</span>
+                                <h6> {{a}} </h6>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="!getStudentAnswerByQuestionId(q.id).answers[aIndex]">
+                            <div class="alert alert-info" role="alert">
+                                <h6> {{a}} </h6>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="q.type === 'multi' ? 'col-4' : 'col-8'">
+                <p> {{getStudentAnswerByQuestionId(q.id).notes}} </p>
+            </div>
+            <br>
+            <br>
+        </div>
+    </ng-container>
 </div>

@@ -20,15 +20,48 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     answers: Answer[];
     studentAnswers: StudentAnswer[];
 
-    total: number;
-    points: number;
-
     newQ: boolean;
     newA: boolean;
 
     questionsFile: File;
     answersFile: File;
     studentAnswersFile: File;
+
+    get total(): number {
+        let total = 0;
+        if (this.questions && this.answers) {
+            for (let qIndex = 0; qIndex < this.questions.length; qIndex++) {
+                for (let aIndex = 0; aIndex < this.answers[qIndex].values.length; aIndex++) {
+                    if (this.answers[qIndex].values[aIndex] > 0) {
+                        total += this.answers[qIndex].values[aIndex];
+                    }
+                }
+            }
+        }
+        return total;
+    }
+
+    get points(): number {
+        let points = 0;
+        if (this.questions && this.answers && this.studentAnswers) {
+            for (let qIndex = 0; qIndex < this.questions.length; qIndex++) {
+                const studentAnswer = this.getStudentAnswerByQuestionId(this.questions[qIndex].id);
+                for (let aIndex = 0; aIndex < this.answers[qIndex].values.length; aIndex++) {
+                    if (studentAnswer.answers[aIndex]) {
+                        points += this.answers[qIndex].values[aIndex];
+                    }
+                }
+            }
+        }
+        return points;
+    }
+
+    get mark(): number {
+        if (this.total === 0) {
+            return 0;
+        }
+        return Math.floor(100 * 30 * this.points / this.total) / 100;
+    }
 
     constructor(
         private jsonGetterService: JsonGetterService
@@ -38,7 +71,6 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.total = 0;
         this.newQ = false;
         this.newA = false;
     }
@@ -50,10 +82,15 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
 
     loadAFile(event: any) {
         this.answersFile = event.target.files.item(0);
+        this.newA = true;
     }
 
     loadSAFile(event: any) {
         this.studentAnswersFile = event.target.files.item(0);
+    }
+
+    getStudentAnswerByQuestionId(questionId: number): StudentAnswer {
+        return this.studentAnswers.find(sa => sa.questionId === questionId) || null;
     }
 
     readFilesAndConfront() {
@@ -80,24 +117,12 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
                 }
                 this.newQ = false;
                 this.newA = false;
-
-                this.confront();
             }, (error) => {
                 console.log(error);
             });
     }
-
-    private confront() {
-        if (this.questions && this.answers && this.studentAnswers) {
-            if (this.total === 0) {
-                for (let qIndex = 0; qIndex < this.questions.length; qIndex++) {
-                    for (let aIndex = 0; aIndex < this.answers[qIndex].values.length; aIndex++) {
-                        if (this.answers[qIndex].values[aIndex] > 0) {
-                            this.total += this.answers[qIndex].values[aIndex];
-                        }
-                    }
-                }
-            }
-        }
+    
+    checkedCorrect(qIndex: number, aIndex: number): boolean {
+        return this.answers[qIndex].values[aIndex] > 0;
     }
 }

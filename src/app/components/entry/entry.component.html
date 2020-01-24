@@ -1,25 +1,36 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-    <h1>
-        Verifica del giorno {{ TODAY | date: 'dd/MM/yyyy'}}
-    </h1>
-</div>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Verifica del giorno {{ TODAY | date: 'dd/MM/yyyy'}}</h1>
+    </div>
+</div> 
 <h2>Azioni disponibili</h2>
-<ul>
-    <li>
-        <button type="button" class="btn btn-primary" (click)="onClickToNavigate('start')">Inizia</button>
-    </li>
-    <li>
-        <button type="button" class="btn btn-light" (click)="onClickToNavigate('read')">
-            Leggi le modalità di valutazione
-        </button>
-    </li>
-    <li>
-        <button type="button" class="btn btn-light" (click)="onClickToNavigate('admin')">
-            Strumenti amministrativi
-        </button>
-    </li>
-    <li>
-        <input type="password" [(ngModel)]="password" />
-    </li>
-</ul>
+<div class="container">
+    <div class="row">
+        <ul>
+            <li>
+                <button type="button" class="btn btn-primary" (click)="onClickToNavigate('start')">
+                    Inizia
+                </button>
+            </li>
+            <li>
+                <button type="button" class="btn btn-light" (click)="onClickToNavigate('read')">
+                    Leggi le modalità di valutazione
+                </button>
+            </li>
+            <li>
+                <button type="button" class="btn btn-light" (click)="onClickToNavigate('admin')">
+                    Strumenti amministrativi (inserisci password)
+                </button>
+            </li>
+            <li>
+                <button type="button" class="btn btn-light" (click)="onClickToNavigate('check')">
+                    Voto finale (inserisci password)
+                </button>
+            </li>
+            <li>
+                <input type="password" [(ngModel)]="password" />
+            </li>
+        </ul>
+    </div>
+</div>

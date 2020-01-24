@@ -3,6 +3,7 @@ import { RouterModule } from "@angular/router";
 import { EntryComponent } from "./components/entry/entry.component";
 import { QuestionGeneratorComponent } from "./components/question-generator/question-generator.component";
 import { QuestionComponent } from "./components/question/question.component";
+import { CheckAnswersComponent } from "./components/check-answer/check-answer.component";
 
 @NgModule({
     imports: [
@@ -14,6 +15,10 @@ import { QuestionComponent } from "./components/question/question.component";
             {
                 path: "admin-tools",
                 component: QuestionGeneratorComponent
+            },
+            {
+                path: "check",
+                component: CheckAnswersComponent
             },
             // {
             //     path: 'read',

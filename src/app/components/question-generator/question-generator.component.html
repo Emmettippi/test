@@ -6,6 +6,11 @@
 <div class="container">
     <div class="row">
         <div class=" col-1">
+            <button type="button" class="btn btn-primary" (click)="navigateTo('/entry');">
+                Indietro
+            </button>
+        </div>
+        <div class=" col-1">
             Totale: {{total}}
         </div>
         <div class="col-2">
@@ -30,11 +35,6 @@
         <div class="col-3">
             <input type="file" (change)="loadAFile($event)" />
             Importa Risposte
-        </div>
-        <div class=" col-1">
-            <button type="button" class="btn btn-primary" (click)="navigateTo('/entry');">
-                Indietro
-            </button>
         </div>
     </div>
     <div class="row" *ngFor="let q of questions; let qIndex = index">
