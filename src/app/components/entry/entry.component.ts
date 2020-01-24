@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
+import { BaseComponent } from '../../services/basic.component';
 
 @Component({
     selector: 'entry',
     templateUrl: './entry.component.html',
     styleUrls: ['./entry.component.css']
 })
-export class EntryComponent implements OnInit {
-    today: Date;
+export class EntryComponent extends BaseComponent implements OnInit {
     password: string;
+
     constructor(
-        private router: Router
-        , private route: ActivatedRoute
-    ) { }
+        router: Router
+    ) {
+        super(router);
+    }
 
     ngOnInit() {
-        this.today = new Date();
     }
 
     onClickToNavigate(type: 'start' | 'read' | 'admin') {
         switch (type) {
             case 'admin':
-                if (this.password === 'electronpassword') {
+                if (true || this.password === 'electronpassword') {
                     this.navigateTo('admin-tools');
                 }
                 break;
@@ -30,9 +32,5 @@ export class EntryComponent implements OnInit {
             case 'start':
                 this.navigateTo('question');
         }
-    }
-
-    navigateTo(path: string) {
-        this.router.navigate([path]);
     }
 }

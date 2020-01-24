@@ -1,11 +1,9 @@
 export class Answer {
-    id: number;
-    answers: number[];
+    questionId: number;
     values: number[];
 
-    constructor(id?: number) {
-        this.id = id || null;
-        this.answers = [];
+    constructor(questionId?: number) {
+        this.questionId = questionId || null;
         this.values = [];
     }
 }

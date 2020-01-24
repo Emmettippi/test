@@ -1,0 +1,30 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Verifica del giorno {{ today | date: 'dd/MM/yyyy'}}</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <input type="file" (change)="loadAFile($event)" />
+            Importa Domande
+        </div>
+        <div class="col-3">
+            <input type="file" (change)="loadAFile($event)" />
+            Importa Risposte
+        </div>
+        <div class="col-3">
+            <input type="file" (change)="loadSAFile($event)" />
+            Risposte Studente
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="readFilesAndConfront()">
+                Calcola
+            </button>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+</div>

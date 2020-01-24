@@ -5,6 +5,9 @@
 </div>
 <div class="container">
     <div class="row">
+        <div class=" col-1">
+            Totale: {{total}}
+        </div>
         <div class="col-2">
             <button type="button" class="btn btn-primary" (click)="add()">
                 Domanda++
@@ -70,24 +73,21 @@
                 </div>
             </div>
             <ng-container *ngIf="q.type === 'multi'">
-                <div *ngFor="let aId of q.answersId; let aIndex = index" class="row">
+                <div *ngFor="let tmp of tmpArray[qIndex]; let aIndex = index" class="row">
                     <div class="col-1">
                         <button type="button" class="btn btn-danger" (click)="deleteSelectableAnswer(qIndex, aIndex)">
                             Del
                         </button>
                     </div>
-                    <div class="col-1">
-                        <input type="checkbox" [ngModel]="isChecked(qIndex, aId)"
-                            (ngModelChange)="onCorrectAnswerChange(qIndex, aIndex, $event)" />
-                    </div>
                     <div class="col-4">
                         <input type="text" [(ngModel)]="q.answers[aIndex]" />
                     </div>
                     <div class="col-1">
-                        <input type="number" [(ngModel)]="answers[qIndex].value[aIndex]" />
+                        <input type="number" [(ngModel)]="answers[qIndex].values[aIndex]" />
                     </div>
                 </div>
             </ng-container>
         </div>
+        <br>
     </div>
 </div>
