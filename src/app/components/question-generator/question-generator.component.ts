@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { saveAs } from 'file-saver';
 
 import { JsonGetterService } from 'src/app/services/json-getter.service';
 import { IdGetterService } from 'src/app/services/id-getter.service';
 
 import { Question } from 'src/app/entities/Question';
 import { Answer } from 'src/app/entities/answer';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'question-generator',
@@ -16,6 +18,11 @@ export class QuestionGeneratorComponent implements OnInit {
     questions: Question[];
     answers: Answer[];
 
+    questionsFile: File;
+    answersFile: File;
+
+    readonly FILE = 'File';
+
     constructor(
         private jsonGetterService: JsonGetterService
         , private idGetterService: IdGetterService
@@ -24,24 +31,14 @@ export class QuestionGeneratorComponent implements OnInit {
 
     ngOnInit() {
         this.questions = new Array<Question>();
+        this.answers = new Array<Answer>();
     }
 
-    private doForQuestion(id: number, callback: (i?: number) => void) {
-        for (let i = 0; i < this.questions.length; i++) {
-            if (this.questions[i].id === id) {
-                callback(i);
-                break;
-            }
-        }
-    }
-
-    private doForAnswer(id: number, callback: (i?: number) => void) {
-        for (let i = 0; i < this.answers.length; i++) {
-            if (this.answers[i].id === id) {
-                callback(i);
-                break;
-            }
-        }
+    isChecked(qIndex: number, aId: number): boolean {
+        const answer = this.answers.find((a, i) => {
+            return i === qIndex && a.answers.includes(aId);
+        });
+        return !!answer;
     }
 
     add() {
@@ -52,77 +49,103 @@ export class QuestionGeneratorComponent implements OnInit {
         this.answers.push(a);
     }
 
-    delete(id: number) {
-        let index: number = null;
-        const callback = (i: number) => {
-            index = i;
-        };
-        this.doForQuestion(id, callback);
+    delete(index: number) {
         this.questions.splice(index, 1);
         this.answers.splice(index, 1);
     }
 
-    onAnswerTypeChange(id: number) {
-        const callback = (i: number) => {
-            const q = this.questions[i];
-            q.answers = [];
-            q.answersId = [];
-            if (q.type === 'open') {
-                q.answersId = [this.idGetterService.answerId];
-            }
-        };
-        this.doForQuestion(id, callback);
+    onAnswerTypeChange(event: 'multi' | 'open', index: number) {
+        const q = this.questions[index];
+        q.type = event;
+        q.answers = [];
+        q.answersId = [];
+        if (q.type === 'open') {
+            q.answersId = [this.idGetterService.answerId];
+        }
     }
 
-    addSelectableAnswer(id: number) {
+    addSelectableAnswer(index: number) {
         const answerId = this.idGetterService.answerId;
 
-        const questionCallback = (i: number) => {
-            const q = this.questions[i];
-            q.answers.push('');
-            q.answersId.push(answerId);
-        };
-        this.doForQuestion(id, questionCallback);
+        const q = this.questions[index];
+        q.answers.push('');
+        q.answersId.push(answerId);
 
-        const answerCallback = (i: number) => {
-            const a = this.answers[i];
-            a.answers.push(answerId);
-        };
-        this.doForAnswer(id, answerCallback);
+        // const a = this.answers[index];
+        // a.answers.push(answerId);
     }
 
-    onCorrectAnswerChange(questionId: number, answerId: number, checked: boolean) {
-        let answerCallback: (i: number) => void = null;
+    onCorrectAnswerChange(qIndex: number, aIndex: number, checked: boolean) {
         if (checked) {
-            answerCallback = (i: number) => {
-                const a = this.answers[i];
-                a.answers.push(answerId);
-            };
+            this.answers[qIndex].answers.push(this.questions[qIndex].answersId[aIndex]);
         } else {
-            answerCallback = (i: number) => {
-                const a = this.answers[i];
-                let index: number = null;
-                for (let j = 0; j < this.answers[i].answers.length; j++) {
-                    index = j;
+            let rIndex: number = null;
+            for (let i = 0; i < this.answers[qIndex].answers.length; i++) {
+                if (this.questions[qIndex].answersId[aIndex] === this.answers[qIndex].answers[i]) {
+                    rIndex = i;
                     break;
                 }
-                if (index) {
-                    this.answers[i].answers.splice(index, 1);
-                }
+            }
+            if (rIndex || rIndex === 0) {
+                this.answers[qIndex].answers.splice(rIndex, 1);
             }
         }
-
-        this.doForAnswer(questionId, answerCallback);
     }
 
-    deleteSelectableAnswer(questionId: number, answerId: number) {
-        let index: number = null;
-        const callback = (i: number) => {
-            index = i;
-        };
-        this.doForAnswer(questionId, callback);
-        if (index) {
-
+    deleteSelectableAnswer(qIndex: number, aIndex: number) {
+        if (this.isChecked(qIndex, this.questions[qIndex].answersId[aIndex])) {
+            this.onCorrectAnswerChange(qIndex, aIndex, false);
         }
+        this.questions[qIndex].answers.splice(aIndex, 1);
+        this.questions[qIndex].answersId.splice(aIndex, 1);
+    }
+
+    move(index: number, movement: 'up' | 'down') {
+        const i = movement === 'up' ? -1 : 1;
+
+        const tmpQ = this.questions[index];
+        this.questions[index] = this.questions[index + i];
+        this.questions[index + i] = tmpQ;
+
+        const tmpA = this.answers[index];
+        this.answers[index] = this.answers[index + i];
+        this.answers[index + i] = tmpA;
+    }
+
+    private explicitQACast(type: 'questions' | 'answers'): 'questionsFile' | 'answersFile' {
+        if (type === 'questions') {
+            return 'questionsFile';
+        } else if (type === 'answers') {
+            return 'answersFile';
+        }
+        return null;
+    }
+
+    loadQFile(event: any) {
+        this.questionsFile = event.target.files.item(0);
+    }
+
+    loadAFile(event: any) {
+        this.answersFile = event.target.files.item(0);
+    }
+
+    import() {
+        forkJoin([
+            this.jsonGetterService.getJSON(this.questionsFile['path'])
+            , this.jsonGetterService.getJSON(this.answersFile['path'])
+        ]).subscribe((subscription: Array<Question[] | Answer[]>) => {
+            this.questions = <Question[]>subscription[0];
+            this.answers = <Answer[]>subscription[1];
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
+    save() {
+        const strQ = JSON.stringify(this.questions);
+        saveAs(new Blob([strQ], { type: 'text/csv;charset=UTF-8' }), 'questions.json');
+
+        const strA = JSON.stringify(this.answers);
+        saveAs(new Blob([strA], { type: 'text/csv;charset=UTF-8' }), 'answers.json');
     }
 }

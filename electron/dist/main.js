@@ -6,8 +6,8 @@ var url = require("url");
 var win;
 function createWindow() {
     win = new electron_1.BrowserWindow({
-        width: 800,
-        height: 600
+        width: 1280,
+        height: 720
     });
     win.loadURL(url.format({
         pathname: path.join(__dirname, "/../../dist/test/index.html"),

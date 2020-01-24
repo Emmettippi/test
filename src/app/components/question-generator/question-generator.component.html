@@ -1,8 +1,80 @@
-<div class="content-area">
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Generatore di domande</h1>
+    </div>
+</div>
+<div class="container">
     <div class="row">
-        <div class="col-xs-12">
-            <div id="pageHeading">
-                Generatore di domande
+        <div class="col-2">
+            <button type="button" class="btn btn-primary" (click)="add()">
+                Aggiungi Domanda
+            </button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-success" (click)="save()">
+                Salva
+            </button>
+        </div>
+        <div class=" col-2">
+            <button type="button" class="btn btn-primary" (click)="import()">
+                Importa
+            </button>
+        </div>
+        <div class="col-3">
+            <input type="file" (change)="loadQFile($event)" />
+            Importa Domande
+        </div>
+        <div class="col-3">
+            <input type="file" (change)="loadAFile($event)" />
+            Importa Risposte
+        </div>
+    </div>
+    <div class="row" *ngFor="let q of questions; let qIndex = index">
+        <div class="col-4">
+            <div class="row">
+                <select [ngModel]="q.type" (ngModelChange)="onAnswerTypeChange($event, qIndex)">
+                    <option [ngValue]="'multi'">Risposta Multipla</option>
+                    <option [ngValue]="'open'">Aperta</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <button type="button" class="btn btn-primary" [disabled]="qIndex === 0"
+                        (click)="move(qIndex, 'up')">Su</button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-primary" [disabled]="qIndex === questions.length - 1"
+                        (click)="move(qIndex, 'down')">Giù</button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-danger" (click)="delete(qIndex)">Cancella</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-12">
+                    <textarea style="width: 100%;" [(ngModel)]="q.question"></textarea>
+                </div>
+            </div>
+            <div *ngIf="q.type === 'multi'" class="row">
+                <div class="col-12">
+                    <ul>
+                        <li *ngFor="let a of q.answersId; let aIndex = index">
+                            <button type="button" class="btn btn-danger"
+                                (click)="deleteSelectableAnswer(qIndex, aIndex)">
+                                Del
+                            </button>
+                            <input type="checkbox" [ngModel]="isChecked(qIndex, a)"
+                                (ngModelChange)="onCorrectAnswerChange(qIndex, aIndex, $event)" />
+                            <input type="text" [(ngModel)]="q.answers[aIndex]" />
+                        </li>
+                    </ul>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary" (click)="addSelectableAnswer(qIndex)">
+                    Aggiungi Risposta
+                </button>
             </div>
         </div>
     </div>
