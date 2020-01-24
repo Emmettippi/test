@@ -25,10 +25,6 @@ import { CheckAnswersComponent } from "./components/check-answer/check-answer.co
             //     component: ExternalRedirectComponent
             // },
             {
-                path: "question/:id",
-                component: QuestionComponent
-            },
-            {
                 path: "question",
                 component: QuestionComponent
             }

@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class=" col-1">
-            <button type="button" class="btn btn-primary" (click)="navigateTo('/entry');">
+            <button type="button" class="btn btn-primary" (click)="navigateTo('/entry')">
                 Indietro
             </button>
         </div>
@@ -43,7 +43,7 @@
     <ng-container *ngIf="questions && questions.length">
         <div class="row" *ngFor="let q of questions; let qIndex = index">
             <div class="col-4">
-                <h5> {{q.question}} </h5>
+                <h5> {{qIndex + 1}}) {{q.question}} </h5>
             </div>
             <div *ngIf="q.type === 'multi'" class="col-4">
                 <div class="row" *ngFor="let a of q.answers; let aIndex = index">

@@ -1,0 +1,67 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Generatore di domande</h1>
+    </div>
+</div>
+<div class="container" *ngIf="isLoaded">
+    <div class="row">
+        <div class="col-9">
+            <div class="row">
+                <div class="col-12">
+                    <h5>{{question.question}}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8" *ngIf="question.type === 'multi'">
+                    <div class="row">
+                        <ng-container *ngFor="let a of question.answers; let aIndex = index">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" [(ngModel)]="studentAnswer.answers[aIndex]">
+                                    </span>
+                                    <label class="form-control">{{a}}</label>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div [ngClass]="question.type === 'multi' ? 'col-4' : 'col-12'">
+                    <textarea style="width: 100%;" [(ngModel)]="studentAnswer.notes"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <div class="col-4">
+                    <button type="button" class="btn btn-success" (click)="save()">
+                        Salva
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-primary" [disabled]="selected === 0"
+                        (click)="changeQuestion(selected - 1)">
+                        Prec
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-primary" [disabled]="selected === questions.length - 1"
+                        (click)="changeQuestion(selected + 1)">
+                        Succ
+                    </button>
+                </div>
+                <div *ngFor="let q of questions; let qIndex = index" class="col-4">
+                    <button type="button" class="btn" [ngClass]="qIndex === selected ? 'btn-secondary' : 'btn-default'"
+                        (click)="changeQuestion(qIndex)">
+                        {{qIndex + 1}}
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-warning" (click)="back()">
+                        Indietro
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
