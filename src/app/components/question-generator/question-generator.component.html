@@ -43,16 +43,23 @@
                 </select>
             </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-2">
                     <button type="button" class="btn btn-primary" [disabled]="qIndex === 0"
                         (click)="move(qIndex, 'up')">Su</button>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <button type="button" class="btn btn-primary" [disabled]="qIndex === questions.length - 1"
                         (click)="move(qIndex, 'down')">Giù</button>
                 </div>
                 <div class="col-4">
-                    <button type="button" class="btn btn-danger" (click)="delete(qIndex)">Cancella</button>
+                    <button type="button" class="btn btn-danger" (click)="delete(qIndex)">
+                        Del
+                    </button>
+                </div>
+                <div class="col-4" *ngIf="q.type === 'multi'">
+                    <button type="button" class="btn btn-primary" (click)="addSelectableAnswer(qIndex)">
+                        Risposta++
+                    </button>
                 </div>
             </div>
         </div>
@@ -62,25 +69,25 @@
                     <textarea style="width: 100%;" [(ngModel)]="q.question"></textarea>
                 </div>
             </div>
-            <div *ngIf="q.type === 'multi'" class="row">
-                <div class="col-12">
-                    <ul>
-                        <li *ngFor="let a of q.answersId; let aIndex = index">
-                            <button type="button" class="btn btn-danger"
-                                (click)="deleteSelectableAnswer(qIndex, aIndex)">
-                                Del
-                            </button>
-                            <input type="checkbox" [ngModel]="isChecked(qIndex, a)"
-                                (ngModelChange)="onCorrectAnswerChange(qIndex, aIndex, $event)" />
-                            <input type="text" [(ngModel)]="q.answers[aIndex]" />
-                        </li>
-                    </ul>
+            <ng-container *ngIf="q.type === 'multi'">
+                <div *ngFor="let aId of q.answersId; let aIndex = index" class="row">
+                    <div class="col-1">
+                        <button type="button" class="btn btn-danger" (click)="deleteSelectableAnswer(qIndex, aIndex)">
+                            Del
+                        </button>
+                    </div>
+                    <div class="col-1">
+                        <input type="checkbox" [ngModel]="isChecked(qIndex, aId)"
+                            (ngModelChange)="onCorrectAnswerChange(qIndex, aIndex, $event)" />
+                    </div>
+                    <div class="col-4">
+                        <input type="text" [(ngModel)]="q.answers[aIndex]" />
+                    </div>
+                    <div class="col-1">
+                        <input type="number" [(ngModel)]="answers[qIndex].value[aIndex]" />
+                    </div>
                 </div>
-                <br>
-                <button type="button" class="btn btn-primary" (click)="addSelectableAnswer(qIndex)">
-                    Aggiungi Risposta
-                </button>
-            </div>
+            </ng-container>
         </div>
     </div>
 </div>
