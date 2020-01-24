@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/services/basic.component';
 import { forkJoin, Observable } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 import { JsonGetterService } from 'src/app/services/json-getter.service';
 
 import { Question } from 'src/app/entities/Question';
 import { Answer } from 'src/app/entities/answer';
 import { StudentAnswer } from 'src/app/entities/student-answer';
+import { MarkPerQuestion, FinalMark } from 'src/app/entities/final-mark';
+
+type MultiCheck = 'correct' | 'avoided' | 'wrong';
 
 @Component({
     selector: 'check-answer',
@@ -26,6 +30,8 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     questionsFile: File;
     answersFile: File;
     studentAnswersFile: File;
+
+    adjustment: number;
 
     get total(): number {
         let total = 0;
@@ -53,7 +59,7 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
                 }
             }
         }
-        return points;
+        return points + (this.adjustment || 0);
     }
 
     get mark(): number {
@@ -73,6 +79,15 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.newQ = false;
         this.newA = false;
+        this.adjustment = 0;
+    }
+
+    getStringifiedBonus() {
+        let ret = '';
+        if (this.adjustment) {
+            ret = '(+' + this.adjustment+ ')' ;
+        }
+        return ret;
     }
 
     loadQFile(event: any) {
@@ -121,8 +136,65 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
                 console.log(error);
             });
     }
-    
-    checkedCorrect(qIndex: number, aIndex: number): boolean {
-        return this.answers[qIndex].values[aIndex] > 0;
+
+    isNotes(qId: number): boolean {
+        return !!this.getStudentAnswerByQuestionId(qId).notes;
+    }
+
+    getAlertClass(qIndex: number, aIndex: number) {
+        let ret: string = null;
+        const correct = this.checkedCorrect(qIndex, aIndex);
+        switch (correct) {
+            case 'correct':
+                ret = 'alert-success';
+                break;
+            case 'avoided':
+                ret = 'alert-info';
+                break;
+            case 'wrong':
+                ret = 'alert-danger';
+                break;
+        }
+        return ret;
+    }
+
+    getGlyphiconClass(qIndex: number, aIndex: number) {
+        let ret: string = null;
+        const correct = this.checkedCorrect(qIndex, aIndex);
+        switch (correct) {
+            case 'correct':
+            case 'avoided':
+                ret = 'glyphicon-ok';
+                break;
+            case 'wrong':
+                ret = 'glyphicon-remove';
+                break;
+        }
+        return ret;
+    }
+
+    checkedCorrect(qIndex: number, aIndex: number): 'correct' | 'avoided' | 'wrong' {
+        let correct: MultiCheck = 'wrong';
+        if (this.answers[qIndex].values[aIndex] > 0
+            && this.getStudentAnswerByQuestionId(this.questions[qIndex].id).answers[aIndex]) {
+            correct = 'correct';
+        } else if (this.answers[qIndex].values[aIndex] <= 0
+            && !this.getStudentAnswerByQuestionId(this.questions[qIndex].id).answers[aIndex]) {
+            correct = 'avoided';
+        }
+        return correct;
+    }
+
+    confirmMark() {
+        let marks = new Array<MarkPerQuestion>();
+        for (let qIndex = 0; qIndex < this.questions.length; qIndex++) {
+            const sa = this.getStudentAnswerByQuestionId(this.questions[qIndex].id);
+            sa.teacherNotes = this.answers[qIndex].teacherNotes;
+            marks.push(new MarkPerQuestion(this.questions[qIndex], this.answers[qIndex], sa));
+        }
+        const finalMark = new FinalMark(marks);
+        finalMark.adjustment = this.adjustment;
+        const str = JSON.stringify(finalMark);
+        saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), 'student.json');
     }
 }

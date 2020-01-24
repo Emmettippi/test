@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1>Verifica del giorno {{ today | date: 'dd/MM/yyyy'}}</h1>
+        <h1>Verifica del giorno {{ TODAY | date: 'dd/MM/yyyy'}}</h1>
     </div>
 </div>
 <div class="container">
@@ -11,7 +11,7 @@
                 Indietro
             </button>
         </div>
-        <div class="col-2">
+        <div class="col-1">
             <button type="button" class="btn btn-primary" (click)="readFilesAndConfront()">
                 Calcola
             </button>
@@ -28,15 +28,23 @@
             <input type="file" (change)="loadSAFile($event)" />
             Risposte Studente
         </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-success" (click)="confirmMark()">
+                Conferma
+            </button>
+        </div>
     </div>
     <div class="row">
-        <div class="col-4">
-            <h3>Punteggio: {{points}}</h3>
+        <div class="col-3">
+            <h3>Bonus: <input type="number" [(ngModel)]="adjustment" /></h3>
         </div>
-        <div class="col-4">
+        <div class="col-3">
+            <h3>Punteggio: {{points}} {{getStringifiedBonus()}}</h3>
+        </div>
+        <div class="col-3">
             <h3>Massimo: {{total}}</h3>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <h3>Voto: {{mark}}</h3>
         </div>
     </div>
@@ -46,30 +54,22 @@
                 <h5> {{qIndex + 1}}) {{q.question}} </h5>
             </div>
             <div *ngIf="q.type === 'multi'" class="col-4">
-                <div class="row" *ngFor="let a of q.answers; let aIndex = index">
-                    <div class="col-4">
-                        <ng-container *ngIf="getStudentAnswerByQuestionId(q.id).answers[aIndex]">
-                            <div class="alert" role="alert"
-                                [ngClass]="checkedCorrect(qIndex, aIndex) ? 'alert-success' : 'alert-danger'">
-                                <span class="glyphicon" aria-hidden="true"
-                                    [ngClass]="checkedCorrect(qIndex, aIndex) ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
-                                <span class="sr-only">Error:</span>
-                                <h6> {{a}} </h6>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="!getStudentAnswerByQuestionId(q.id).answers[aIndex]">
-                            <div class="alert alert-info" role="alert">
-                                <h6> {{a}} </h6>
-                            </div>
-                        </ng-container>
+                <div class="row">
+                    <div class="col-6" *ngFor="let a of q.answers; let aIndex = index">
+                        <div class="alert" role="alert" [ngClass]="getAlertClass(qIndex, aIndex)">
+                            <span class="glyphicon" aria-hidden="true"
+                                [ngClass]="getGlyphiconClass(qIndex, aIndex)"></span>
+                            <span class="sr-only">Error:</span>
+                            <h6> {{answers[qIndex].values[aIndex]}} | {{a}} </h6>
+                        </div>
                     </div>
                 </div>
             </div>
             <div [ngClass]="q.type === 'multi' ? 'col-4' : 'col-8'">
-                <p> {{getStudentAnswerByQuestionId(q.id).notes}} </p>
+                <p *ngIf="isNotes(q.id)"> <b>Note dello Studente:</b> {{getStudentAnswerByQuestionId(q.id).notes}} </p>
+                <p> <b>Note dell'Insegnante:</b> {{answers[qIndex].teacherNotes}} </p>
             </div>
-            <br>
-            <br>
+            <hr />
         </div>
     </ng-container>
 </div>

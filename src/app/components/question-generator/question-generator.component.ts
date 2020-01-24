@@ -76,11 +76,14 @@ export class QuestionGeneratorComponent extends BaseComponent implements OnInit 
     }
 
     onAnswerTypeChange(event: 'multi' | 'open', index: number) {
-        const q = this.questions[index];
-        q.type = event;
-        q.answers = [];
+        this.questions[index].type = event;
+        this.questions[index].answers = [];
 
         this.answers[index].values = [];
+        if (this.questions[index].type === 'open') {
+            this.questions[index].answers.push('');
+            this.answers[index].values.push(0);
+        }
     }
 
     addSelectableAnswer(index: number) {

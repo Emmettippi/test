@@ -1,1 +1,1 @@
-[{"id":1,"question":"Ciao","type":"multi","answers":["s","n"]},{"id":2,"question":"Test secondo","type":"open","answers":[]}]
+﻿[{"id":1,"question":"Prima domanda a risposta multipla","type":"multi","answers":["Risposta giusta","Risposta da evitare","Risposta Sbagliata","Risposta mancata"]},{"id":2,"question":"Domanda aperta","type":"open","answers":[""]},{"id":3,"question":"Domandone vero falso","type":"multi","answers":["Giusta","Sbagliata"]}]
