@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 
 import { JsonGetterService } from 'src/app/services/json-getter.service';
@@ -26,6 +27,7 @@ export class QuestionGeneratorComponent implements OnInit {
     constructor(
         private jsonGetterService: JsonGetterService
         , private idGetterService: IdGetterService
+        , private router: Router
     ) {
     }
 
@@ -112,15 +114,6 @@ export class QuestionGeneratorComponent implements OnInit {
         this.answers[index + i] = tmpA;
     }
 
-    private explicitQACast(type: 'questions' | 'answers'): 'questionsFile' | 'answersFile' {
-        if (type === 'questions') {
-            return 'questionsFile';
-        } else if (type === 'answers') {
-            return 'answersFile';
-        }
-        return null;
-    }
-
     loadQFile(event: any) {
         this.questionsFile = event.target.files.item(0);
     }
@@ -147,5 +140,9 @@ export class QuestionGeneratorComponent implements OnInit {
 
         const strA = JSON.stringify(this.answers);
         saveAs(new Blob([strA], { type: 'text/csv;charset=UTF-8' }), 'answers.json');
+    }
+
+    navigateTo(path: string) {
+        this.router.navigate([path]);
     }
 }
