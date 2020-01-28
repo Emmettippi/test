@@ -37,6 +37,12 @@
             Importa Risposte
         </div>
     </div>
+    <div class="row">
+        <div class="col-4">
+            Tempo di Verifica (minuti)
+            <input type="number" [(ngModel)]="questionsObj.expectedTime" />
+        </div>
+    </div>
     <div class="row" *ngFor="let q of questions; let qIndex = index">
         <div class="col-4">
             <div class="row">

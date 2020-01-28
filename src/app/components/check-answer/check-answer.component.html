@@ -36,7 +36,7 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <h3>Bonus: <input type="number" [(ngModel)]="adjustment" /></h3>
+            <h3>Bonus: <input type="number" [(ngModel)]="adjustment" style="width: 100px;" /></h3>
         </div>
         <div class="col-3">
             <h3>Punteggio: {{points}} {{getStringifiedBonus()}}</h3>
@@ -47,6 +47,9 @@
         <div class="col-3">
             <h3>Voto: {{mark}}</h3>
         </div>
+    </div>
+    <div class="row">
+        <!-- TODO handle time and points for open questions-->
     </div>
     <ng-container *ngIf="questions && questions.length">
         <div class="row" *ngFor="let q of questions; let qIndex = index">

@@ -11,3 +11,14 @@ export class Question {
         this.answers = [];
     }
 }
+
+export class Questions {
+    hash: number;
+    expectedTime: number;
+    questions: Question[];
+
+    constructor(questions: Question[]) {
+        this.questions = questions;
+        this.hash = null;
+    }
+}

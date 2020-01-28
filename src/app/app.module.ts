@@ -11,7 +11,7 @@ import { QuestionGeneratorComponent } from './components/question-generator/ques
 import { CheckAnswersComponent } from './components/check-answer/check-answer.component';
 
 import { JsonGetterService } from './services/json-getter.service';
-import { IdGetterService } from './services/id-getter.service';
+import { StandardService } from './services/standard.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -31,7 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
     ],
     providers: [
         JsonGetterService
-        , IdGetterService
+        , StandardService
     ],
     exports: [
         RouterModule

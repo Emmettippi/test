@@ -6,10 +6,11 @@ import { saveAs } from 'file-saver';
 
 import { JsonGetterService } from 'src/app/services/json-getter.service';
 
-import { Question } from 'src/app/entities/Question';
-import { Answer } from 'src/app/entities/answer';
-import { StudentAnswer } from 'src/app/entities/student-answer';
-import { MarkPerQuestion, FinalMark } from 'src/app/entities/final-mark';
+import { Question, Questions } from 'src/app/entities/Question';
+import { Answer, Answers } from 'src/app/entities/answer';
+import { StudentAnswer, StudentAnswers } from 'src/app/entities/student-answer';
+import { FullQuestionAnswer, FinalMark } from 'src/app/entities/final-mark';
+import { flatten } from '@angular/core/src/render3/util';
 
 type MultiCheck = 'correct' | 'avoided' | 'wrong';
 
@@ -20,9 +21,9 @@ type MultiCheck = 'correct' | 'avoided' | 'wrong';
 })
 export class CheckAnswersComponent extends BaseComponent implements OnInit {
 
-    questions: Question[];
-    answers: Answer[];
-    studentAnswers: StudentAnswer[];
+    questionsObj: Questions;
+    answersObj: Answers;
+    studentAnswersObj: StudentAnswers;
 
     newQ: boolean;
     newA: boolean;
@@ -32,6 +33,18 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     studentAnswersFile: File;
 
     adjustment: number;
+
+    get questions(): Question[] {
+        return this.questionsObj.questions;
+    }
+
+    get answers(): Answer[] {
+        return this.answersObj.answers;
+    }
+
+    get studentAnswers(): StudentAnswer[] {
+        return this.studentAnswersObj.studentAnswers;
+    }
 
     get total(): number {
         let total = 0;
@@ -85,8 +98,16 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     getStringifiedBonus() {
         let ret = '';
         if (this.adjustment) {
-            ret = '(+' + this.adjustment+ ')' ;
+            ret = '(+' + this.adjustment + ')';
         }
+        return ret;
+    }
+
+    getStringifiedTime(timeInMillis: number) {
+        const date = new Date(timeInMillis);
+        let ret = '';
+        ret += date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
+        ret += ' ' + date.getHours() + ' : ' + date.getMinutes() + ' : ' + date.getSeconds();
         return ret;
     }
 
@@ -118,16 +139,16 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
             observables.push(this.jsonGetterService.getJSON(this.answersFile['path']));
         }
         forkJoin(observables)
-            .subscribe((subscription: Array<Question[] | Answer[] | StudentAnswer[]>) => {
-                this.studentAnswers = <StudentAnswer[]>subscription[0];
+            .subscribe((subscription: Array<Questions | Answers | StudentAnswers>) => {
+                this.studentAnswersObj = <StudentAnswers>subscription[0];
                 if (this.newQ || this.newA) {
                     if (this.newQ && this.newA) {
-                        this.questions = <Question[]>subscription[1];
-                        this.answers = <Answer[]>subscription[2];
+                        this.questionsObj = <Questions>subscription[1];
+                        this.answersObj = <Answers>subscription[2];
                     } else if (this.newQ) {
-                        this.questions = <Question[]>subscription[1];
+                        this.questionsObj = <Questions>subscription[1];
                     } else if (this.newA) {
-                        this.answers = <Answer[]>subscription[1];
+                        this.answersObj = <Answers>subscription[1];
                     }
                 }
                 this.newQ = false;
@@ -186,13 +207,18 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     }
 
     confirmMark() {
-        let marks = new Array<MarkPerQuestion>();
+        const marks = new Array<FullQuestionAnswer>();
         for (let qIndex = 0; qIndex < this.questions.length; qIndex++) {
             const sa = this.getStudentAnswerByQuestionId(this.questions[qIndex].id);
-            sa.teacherNotes = this.answers[qIndex].teacherNotes;
-            marks.push(new MarkPerQuestion(this.questions[qIndex], this.answers[qIndex], sa));
+            marks.push(new FullQuestionAnswer(this.questions[qIndex], this.answers[qIndex], sa));
         }
-        const finalMark = new FinalMark(marks);
+        const finalMark = new FinalMark(
+            marks
+            , this.adjustment
+            , this.questionsObj.hash
+            , this.studentAnswersObj.startTime
+            , this.studentAnswersObj.endTime
+            , this.questionsObj.expectedTime);
         finalMark.adjustment = this.adjustment;
         const str = JSON.stringify(finalMark);
         saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), 'student.json');

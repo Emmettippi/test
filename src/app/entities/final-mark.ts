@@ -1,30 +1,43 @@
-import { Question } from "./Question";
-import { Answer } from "./answer";
-import { StudentAnswer } from "./student-answer";
+import { Question } from './Question';
+import { Answer } from './answer';
+import { StudentAnswer } from './student-answer';
 
-export class MarkPerQuestion {
-    questions: Question;
-    answers: Answer;
-    studentAnswers: StudentAnswer;
+export class FullQuestionAnswer {
+    question: Question;
+    answer: Answer;
+    studentAnswer: StudentAnswer;
     constructor(
-        questions?: Question
-        , answers?: Answer
-        , studentAnswers?: StudentAnswer
+        question?: Question
+        , answer?: Answer
+        , studentAnswer?: StudentAnswer
     ) {
-        this.questions = questions;
-        this.answers = answers;
-        this.studentAnswers = studentAnswers;
+        this.question = question;
+        this.answer = answer;
+        this.studentAnswer = studentAnswer;
     }
 }
 
 export class FinalMark {
-    questionsAndAnswers: MarkPerQuestion[];
+    questionsAndAnswers: FullQuestionAnswer[];
     adjustment: number;
+    questionAnswerHash: number;
+    startTime: number;
+    endTime: number;
+    expectedTime: number;
 
     constructor(
-        questionsAndAnswers: MarkPerQuestion[]
+        questionsAndAnswers: FullQuestionAnswer[]
+        , adjustment: number
+        , questionAnswerHash: number
+        , startTime: number
+        , endTime: number
+        , expectedTime: number
     ) {
         this.questionsAndAnswers = questionsAndAnswers;
-        this.adjustment = 0;
+        this.adjustment = adjustment;
+        this.questionAnswerHash = questionAnswerHash;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.expectedTime = expectedTime;
     }
 }

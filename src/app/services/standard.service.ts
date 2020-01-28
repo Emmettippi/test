@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class IdGetterService {
+export class StandardService {
+
+    studentName: string;
 
     private _questionId: number;
     private _answerId: number;

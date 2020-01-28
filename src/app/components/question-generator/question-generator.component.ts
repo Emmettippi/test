@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 
-import { BaseComponent } from 'src/app/services/basic.component';
-import { JsonGetterService } from 'src/app/services/json-getter.service';
-import { IdGetterService } from 'src/app/services/id-getter.service';
+import { BaseComponent } from '../../services/basic.component';
+import { JsonGetterService } from '../../services/json-getter.service';
+import { StandardService } from '../../services/standard.service';
 
-import { Question } from 'src/app/entities/Question';
-import { Answer } from 'src/app/entities/answer';
+import { Question, Questions } from '../../entities/Question';
+import { Answer, Answers } from '../../entities/answer';
 
 @Component({
     selector: 'question-generator',
@@ -17,11 +17,19 @@ import { Answer } from 'src/app/entities/answer';
 })
 export class QuestionGeneratorComponent extends BaseComponent implements OnInit {
 
-    questions: Question[];
-    answers: Answer[];
+    questionsObj: Questions;
+    answersObj: Answers;
 
     questionsFile: File;
     answersFile: File;
+
+    get questions(): Question[] {
+        return this.questionsObj.questions;
+    }
+
+    get answers(): Answer[] {
+        return this.answersObj.answers;
+    }
 
     readonly FILE = 'File';
 
@@ -51,19 +59,20 @@ export class QuestionGeneratorComponent extends BaseComponent implements OnInit 
 
     constructor(
         private jsonGetterService: JsonGetterService
-        , private idGetterService: IdGetterService
+        , private standardService: StandardService
         , router: Router
     ) {
         super(router);
     }
 
     ngOnInit() {
-        this.questions = new Array<Question>();
-        this.answers = new Array<Answer>();
+        this.questionsObj = new Questions([]);
+        this.questionsObj.expectedTime = 0;
+        this.answersObj = new Answers([]);
     }
 
     add() {
-        const q = new Question(this.idGetterService.questionId);
+        const q = new Question(this.standardService.questionId);
         this.questions.push(q);
 
         const a = new Answer(q.id);
@@ -125,19 +134,26 @@ export class QuestionGeneratorComponent extends BaseComponent implements OnInit 
         forkJoin([
             this.jsonGetterService.getJSON(this.questionsFile['path'])
             , this.jsonGetterService.getJSON(this.answersFile['path'])
-        ]).subscribe((subscription: Array<Question[] | Answer[]>) => {
-            this.questions = <Question[]>subscription[0];
-            this.answers = <Answer[]>subscription[1];
+        ]).subscribe((subscription: Array<Questions | Answers>) => {
+            this.questionsObj = <Questions>subscription[0];
+            this.answersObj = <Answers>subscription[1];
         }, (error) => {
             console.log(error);
         });
     }
 
     save() {
-        const strQ = JSON.stringify(this.questions);
+        const questionsObj = this.questionsObj;
+        const answersObj = this.answersObj;
+
+        const hash = this.hash(JSON.stringify(questionsObj));
+        questionsObj.hash = hash;
+        answersObj.hash = hash;
+
+        const strQ = JSON.stringify(questionsObj);
         saveAs(new Blob([strQ], { type: 'text/csv;charset=UTF-8' }), 'questions.json');
 
-        const strA = JSON.stringify(this.answers);
+        const strA = JSON.stringify(answersObj);
         saveAs(new Blob([strA], { type: 'text/csv;charset=UTF-8' }), 'answers.json');
     }
 }

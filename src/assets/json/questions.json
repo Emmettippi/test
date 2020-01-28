@@ -1,1 +1,1 @@
-﻿[{"id":1,"question":"Prima domanda a risposta multipla","type":"multi","answers":["Risposta giusta","Risposta da evitare","Risposta Sbagliata","Risposta mancata"]},{"id":2,"question":"Domanda aperta","type":"open","answers":[""]},{"id":3,"question":"Domandone vero falso","type":"multi","answers":["Giusta","Sbagliata"]}]
+﻿{"questions":[{"id":1,"question":"Domanda a risposta multipla","type":"multi","answers":["Vale 4","Vale -1","Vale -2"]},{"id":2,"question":"Domanda a risposta aperta","type":"open","answers":[""]}],"hash":-362062300,"expectedTime":10}
