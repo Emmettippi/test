@@ -5,6 +5,7 @@ import { QuestionGeneratorComponent } from './components/question-generator/ques
 import { QuestionComponent } from './components/question/question.component';
 import { CheckAnswersComponent } from './components/check-answer/check-answer.component';
 import { ResultsComponent } from './components/results/results.component';
+import { RulesComponent } from './components/rules/rules.component';
 
 @NgModule({
     imports: [
@@ -28,11 +29,11 @@ import { ResultsComponent } from './components/results/results.component';
             {
                 path: "results",
                 component: ResultsComponent
+            },
+            {
+                path: 'read',
+                component: RulesComponent
             }
-            // {
-            //     path: 'read',
-            //     component: ExternalRedirectComponent
-            // },
         ])
     ],
     exports: [RouterModule]

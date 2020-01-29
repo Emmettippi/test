@@ -11,7 +11,6 @@ import { BaseComponent } from '../../services/basic.component';
 export class EntryComponent extends BaseComponent implements OnInit {
     password: string;
 
-    // password is electronpassword
     readonly HASH_PASSWORD = -194417027;
 
     constructor(
@@ -32,6 +31,7 @@ export class EntryComponent extends BaseComponent implements OnInit {
                 }
                 break;
             case 'read':
+                this.navigateTo('read');
                 break;
             case 'start':
                 this.navigateTo('question');

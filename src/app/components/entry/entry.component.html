@@ -9,32 +9,32 @@
     <div class="row">
         <ul>
             <li>
-                <button type="button" class="btn btn-primary" (click)="onClickToNavigate('start')">
+                <button type="button" class="btn btn-success" (click)="onClickToNavigate('start')">
                     Inizia
                 </button>
             </li>
             <li>
-                <button type="button" class="btn btn-secondary" (click)="onClickToNavigate('read')">
-                    Leggi le modalità di valutazione
+                <button type="button" class="btn btn-light" (click)="onClickToNavigate('read')">
+                    Regolamento e modalità di valutazione
                 </button>
-            </li>
-            <li>
-                <button type="button" class="btn btn-light" (click)="onClickToNavigate('admin')">
-                    Strumenti amministrativi (inserisci password)
-                </button>
-            </li>
-            <li>
-                <button type="button" class="btn btn-light" (click)="onClickToNavigate('check')">
-                    Voto finale (inserisci password)
-                </button>
-            </li>
-            <li>
-                Password: <input type="password" [(ngModel)]="password" />
             </li>
             <li>
                 <button type="button" class="btn btn-primary" (click)="onClickToNavigate('results')">
                     Visualizza correzione
                 </button>
+            </li>
+            <li>
+                <button type="button" class="btn btn-warning" (click)="onClickToNavigate('admin')">
+                    Genera domande e risposte (inserisci password)
+                </button>
+            </li>
+            <li>
+                <button type="button" class="btn btn-warning" (click)="onClickToNavigate('check')">
+                    Voto finale (inserisci password)
+                </button>
+            </li>
+            <li>
+                Password: <input type="password" [(ngModel)]="password" />
             </li>
         </ul>
     </div>
