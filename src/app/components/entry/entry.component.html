@@ -14,7 +14,7 @@
                 </button>
             </li>
             <li>
-                <button type="button" class="btn btn-light" (click)="onClickToNavigate('read')">
+                <button type="button" class="btn btn-secondary" (click)="onClickToNavigate('read')">
                     Leggi le modalità di valutazione
                 </button>
             </li>
@@ -29,7 +29,12 @@
                 </button>
             </li>
             <li>
-                <input type="password" [(ngModel)]="password" />
+                Password: <input type="password" [(ngModel)]="password" />
+            </li>
+            <li>
+                <button type="button" class="btn btn-primary" (click)="onClickToNavigate('correction')">
+                    Visualizza correzione
+                </button>
             </li>
         </ul>
     </div>

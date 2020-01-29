@@ -10,7 +10,7 @@
                 Indietro
             </button>
         </div>
-        <div class=" col-1">
+        <div class="col-1">
             Totale: {{total}}
         </div>
         <div class="col-2">
@@ -78,7 +78,7 @@
                     <h4>{{qIndex + 1}})</h4>
                 </div>
                 <div class="col-11">
-                    <textarea style="width: 100%;" [(ngModel)]="q.question"></textarea>
+                    <textarea [(ngModel)]="q.question"></textarea>
                 </div>
             </div>
             <ng-container *ngIf="q.type === 'multi'">
@@ -97,11 +97,11 @@
                 </div>
             </ng-container>
             <div class="row">
-                <div *ngIf="q.type === 'open'" class="col-4">
+                <div *ngIf="q.type === 'open'" class="col-2">
                     <input type="number" [(ngModel)]="answers[qIndex].values[0]" />
                 </div>
-                <div [ngClass]="q.type === 'open' ? 'col-8' : 'col-12'">
-                    <textarea style="width: 100%;" [(ngModel)]="answers[qIndex].teacherNotes"></textarea>
+                <div [ngClass]="q.type === 'open' ? 'col-10' : 'col-12'">
+                    <textarea [(ngModel)]="answers[qIndex].teacherNotes"></textarea>
                 </div>
             </div>
             <hr />

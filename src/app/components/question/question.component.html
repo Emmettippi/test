@@ -20,20 +20,29 @@
                                     <span class="input-group-addon">
                                         <input type="checkbox" [(ngModel)]="studentAnswer.answers[aIndex]">
                                     </span>
-                                    <label class="form-control">{{a}}</label>
+                                    <label class="form-control" (click)="markAnswer(aIndex)">{{a}}</label>
                                 </div>
                             </div>
                         </ng-container>
                     </div>
                 </div>
                 <div [ngClass]="question.type === 'multi' ? 'col-4' : 'col-12'">
-                    <textarea style="width: 100%;" [(ngModel)]="studentAnswer.notes"></textarea>
+                    <textarea [(ngModel)]="studentAnswer.notes"></textarea>
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-3 scroll-y">
             <div class="row">
-                <h5>Tempo: {{cronometer}} / {{questionsObj.expectedTime}} minuti</h5>
+                <div class="col-12">
+                    Nome: <input type="text" [(ngModel)]="studentAnswersObj.name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert" role="alert" [ngClass]="getAlertClass()">
+                        <h6>Tempo: {{getCronometer()}} / {{questionsObj.expectedTime}} minuti</h6>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-4">

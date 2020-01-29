@@ -11,11 +11,6 @@
                 Indietro
             </button>
         </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-primary" (click)="readFilesAndConfront()">
-                Calcola
-            </button>
-        </div>
         <div class="col-3">
             <input type="file" (change)="loadQFile($event)" />
             Importa Domande
@@ -29,6 +24,11 @@
             Risposte Studente
         </div>
         <div class="col-1">
+            <button type="button" class="btn btn-primary" (click)="readFilesAndConfront()">
+                Calcola
+            </button>
+        </div>
+        <div class="col-1">
             <button type="button" class="btn btn-success" (click)="confirmMark()">
                 Conferma
             </button>
@@ -36,7 +36,7 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <h3>Bonus: <input type="number" [(ngModel)]="adjustment" style="width: 100px;" /></h3>
+            <h3>Bonus: <input type="number" [(ngModel)]="adjustment" /></h3>
         </div>
         <div class="col-3">
             <h3>Punteggio: {{points}} {{getStringifiedBonus()}}</h3>
@@ -48,31 +48,66 @@
             <h3>Voto: {{mark}}</h3>
         </div>
     </div>
-    <div class="row">
-        <!-- TODO handle time and points for open questions-->
-    </div>
     <ng-container *ngIf="questions && questions.length">
-        <div class="row" *ngFor="let q of questions; let qIndex = index">
-            <div class="col-4">
-                <h5> {{qIndex + 1}}) {{q.question}} </h5>
+        <div class="row">
+            <div class="col-3">
+                <h6>Verifica iniziata: {{getStringifiedHoursTime(studentAnswersObj.startTime)}}</h6>
             </div>
-            <div *ngIf="q.type === 'multi'" class="col-4">
+            <div class="col-3">
+                <h6>Verifica terminata: {{getStringifiedHoursTime(studentAnswersObj.endTime)}}</h6>
+            </div>
+            <div class="col-3">
+                <h6>
+                    Tempo impiegato:
+                    {{getStringifiedHoursTime(studentAnswersObj.endTime - studentAnswersObj.startTime, true)}}
+                </h6>
+            </div>
+            <div class="col-3">
+                <h6>Tempo massimo: {{questionsObj.expectedTime}} minuti</h6>
+            </div>
+        </div>
+        <div class="row" *ngFor="let q of questions; let qIndex = index">
+            <div class="col-12">
                 <div class="row">
-                    <div class="col-6" *ngFor="let a of q.answers; let aIndex = index">
-                        <div class="alert" role="alert" [ngClass]="getAlertClass(qIndex, aIndex)">
-                            <span class="glyphicon" aria-hidden="true"
-                                [ngClass]="getGlyphiconClass(qIndex, aIndex)"></span>
-                            <span class="sr-only">Error:</span>
-                            <h6> {{answers[qIndex].values[aIndex]}} | {{a}} </h6>
+                    <div class="col-12">
+                        <h5> {{qIndex + 1}}) {{q.question}} </h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="q.type === 'multi'" class="col-5">
+                        <div class="row">
+                            <div class="col-6" *ngFor="let a of q.answers; let aIndex = index">
+                                <div class="alert" role="alert" [ngClass]="getAlertClass(qIndex, aIndex)">
+                                    <span class="glyphicon" aria-hidden="true"
+                                        [ngClass]="getGlyphiconClass(qIndex, aIndex)"></span>
+                                    <span class="sr-only">Error:</span>
+                                    <h6> {{answers[qIndex].values[aIndex]}} | {{a}} </h6>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div [ngClass]="q.type === 'multi' ? 'col-5' : 'col-10'">
+                        <p> <b>Note dell'Insegnante:</b> {{answers[qIndex].teacherNotes}} </p>
+                        <p *ngIf="isNotes(q.id)">
+                            <b>{{q.type === 'multi' ? 'Note' : 'Risposta'}} dello Studente:</b>
+                            {{getStudentAnswerByQuestionId(q.id).notes}}
+                        </p>
+                    </div>
+                    <div class="col-2">
+                        <input type="number" [(ngModel)]="answerPoints[qIndex]" />
+                        {{q.type === 'open' ? ('/ ' + answers[qIndex].values[0]) : '' }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <h6>Correzioni extra</h6>
+                    </div>
+                    <div class="col-9">
+                        <textarea [(ngModel)]="correctionNotes[qIndex]"></textarea>
                     </div>
                 </div>
             </div>
-            <div [ngClass]="q.type === 'multi' ? 'col-4' : 'col-8'">
-                <p *ngIf="isNotes(q.id)"> <b>Note dello Studente:</b> {{getStudentAnswerByQuestionId(q.id).notes}} </p>
-                <p> <b>Note dell'Insegnante:</b> {{answers[qIndex].teacherNotes}} </p>
-            </div>
-            <hr />
+            <br />
         </div>
     </ng-container>
 </div>

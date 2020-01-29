@@ -25,6 +25,9 @@ export class QuestionComponent extends BaseComponent implements OnInit {
 
     expectedTimeInMillis: number;
 
+    timer: any;
+    timePasswedInMillis: number;
+
     get questions(): Question[] {
         return this.questionsObj.questions;
     }
@@ -39,12 +42,6 @@ export class QuestionComponent extends BaseComponent implements OnInit {
 
     get studentAnswer(): StudentAnswer {
         return this.studentAnswers[this.selected];
-    }
-
-    get cronometer(): string {
-        const timePassed = this.studentAnswersObj.startTime - this.expectedTimeInMillis;
-        const timeAsDate = new Date(timePassed);
-        return (timeAsDate.getHours() - 1) + ' : ' + timeAsDate.getMinutes() + ' : ' + timeAsDate.getSeconds();
     }
 
     constructor(
@@ -63,7 +60,7 @@ export class QuestionComponent extends BaseComponent implements OnInit {
                 this.questionsObj = subscription;
                 this.expectedTimeInMillis = this.questionsObj.expectedTime * 60000;
                 const startTime = (new Date()).getTime();
-                this.studentAnswersObj = new StudentAnswers(this.standardService.studentName, startTime, 0, []);
+                this.studentAnswersObj = new StudentAnswers('', startTime, 0, []);
                 for (const q of this.questions) {
                     const sa = new StudentAnswer(q.id);
                     const answers = new Array<boolean>();
@@ -75,6 +72,10 @@ export class QuestionComponent extends BaseComponent implements OnInit {
                     this.studentAnswers.push(sa);
                 }
 
+                this.timer = setInterval(() => {
+                    this.timePasswedInMillis = new Date().getTime() - this.studentAnswersObj.startTime;
+                });
+
                 this.isLoaded = true;
             });
     }
@@ -83,17 +84,43 @@ export class QuestionComponent extends BaseComponent implements OnInit {
         this.selected = qIndex;
     }
 
+    markAnswer(aIndex: number) {
+        this.studentAnswer.answers[aIndex] = !this.studentAnswer.answers[aIndex];
+    }
+
+    getCronometer(): string {
+        const timeAsDate = new Date(this.timePasswedInMillis);
+        const minutes = timeAsDate.getMinutes();
+        const seconds = timeAsDate.getSeconds();
+        return (timeAsDate.getHours() - 1)
+            + ' : ' + (minutes < 10 ? '0' : '') + minutes
+            + ' : ' + (seconds < 10 ? '0' : '') + seconds;
+    }
+
     save() {
         const studentAnswersObj = this.studentAnswersObj;
         const endTime = (new Date()).getTime();
         studentAnswersObj.endTime = endTime;
         const str = JSON.stringify(studentAnswersObj);
-        saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.standardService.studentName + '.json');
+        saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '.json');
     }
 
     back() {
         if (confirm('Attenzione! Tornando indietro perderai tutte le risposte. Continuare?')) {
             this.navigateTo('/entry');
         }
+    }
+
+    getAlertClass(): string {
+        let ret = '';
+        const timePassed = new Date().getTime() - this.studentAnswersObj.startTime;
+        if (this.expectedTimeInMillis - timePassed >= this.expectedTimeInMillis * 0.1) {
+            ret = 'alert-info';
+        } else if (this.expectedTimeInMillis - timePassed >= 0) {
+            ret = 'alert-warning';
+        } else {
+            ret = 'alert-danger';
+        }
+        return ret;
     }
 }

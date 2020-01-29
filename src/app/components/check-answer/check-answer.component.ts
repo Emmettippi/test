@@ -9,8 +9,7 @@ import { JsonGetterService } from 'src/app/services/json-getter.service';
 import { Question, Questions } from 'src/app/entities/Question';
 import { Answer, Answers } from 'src/app/entities/answer';
 import { StudentAnswer, StudentAnswers } from 'src/app/entities/student-answer';
-import { FullQuestionAnswer, FinalMark } from 'src/app/entities/final-mark';
-import { flatten } from '@angular/core/src/render3/util';
+import { QuestionAnswer, FinalMark } from 'src/app/entities/final-mark';
 
 type MultiCheck = 'correct' | 'avoided' | 'wrong';
 
@@ -24,6 +23,8 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     questionsObj: Questions;
     answersObj: Answers;
     studentAnswersObj: StudentAnswers;
+    correctionNotes: string[];
+    answerPoints: number[];
 
     newQ: boolean;
     newA: boolean;
@@ -70,6 +71,7 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
                         points += this.answers[qIndex].values[aIndex];
                     }
                 }
+                points += this.answerPoints[qIndex];
             }
         }
         return points + (this.adjustment || 0);
@@ -108,6 +110,15 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
         let ret = '';
         ret += date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
         ret += ' ' + date.getHours() + ' : ' + date.getMinutes() + ' : ' + date.getSeconds();
+        return ret;
+    }
+
+    getStringifiedHoursTime(timeInMillis: number, reducehours = false) {
+        const date = new Date(timeInMillis);
+        let ret = '';
+        ret += (date.getHours() - (reducehours ? 1 : 0))
+            + ' : ' + date.getMinutes()
+            + ' : ' + date.getSeconds();
         return ret;
     }
 
@@ -151,6 +162,14 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
                         this.answersObj = <Answers>subscription[1];
                     }
                 }
+
+                this.correctionNotes = [];
+                this.answerPoints = []
+                for (const q of this.questions) {
+                    this.correctionNotes.push('');
+                    this.answerPoints.push(0);
+                }
+
                 this.newQ = false;
                 this.newA = false;
             }, (error) => {
@@ -207,20 +226,26 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     }
 
     confirmMark() {
-        const marks = new Array<FullQuestionAnswer>();
+        const questionAnswers = new Array<QuestionAnswer>();
         for (let qIndex = 0; qIndex < this.questions.length; qIndex++) {
             const sa = this.getStudentAnswerByQuestionId(this.questions[qIndex].id);
-            marks.push(new FullQuestionAnswer(this.questions[qIndex], this.answers[qIndex], sa));
+            const qa = new QuestionAnswer(this.questions[qIndex], this.answers[qIndex], sa);
+            qa.correctionNotes = this.correctionNotes[qIndex];
+            qa.answerPoints = this.answerPoints[qIndex];
+            questionAnswers.push(qa);
         }
         const finalMark = new FinalMark(
-            marks
+            questionAnswers
             , this.adjustment
             , this.questionsObj.hash
             , this.studentAnswersObj.startTime
             , this.studentAnswersObj.endTime
-            , this.questionsObj.expectedTime);
+            , this.questionsObj.expectedTime
+            , this.studentAnswersObj.name
+            , this.mark
+        );
         finalMark.adjustment = this.adjustment;
         const str = JSON.stringify(finalMark);
-        saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), 'student.json');
+        saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '-correzione.json');
     }
 }

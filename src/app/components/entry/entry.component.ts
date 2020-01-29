@@ -11,6 +11,9 @@ import { BaseComponent } from '../../services/basic.component';
 export class EntryComponent extends BaseComponent implements OnInit {
     password: string;
 
+    // password is electronpassword
+    readonly HASH_PASSWORD = -194417027;
+
     constructor(
         router: Router
     ) {
@@ -20,10 +23,11 @@ export class EntryComponent extends BaseComponent implements OnInit {
     ngOnInit() {
     }
 
-    onClickToNavigate(type: 'start' | 'read' | 'admin' | 'check') {
+    onClickToNavigate(type: 'start' | 'read' | 'admin' | 'check' | 'correction') {
+        const admin = this.hash(this.password) === this.HASH_PASSWORD;
         switch (type) {
             case 'admin':
-                if (true || this.password === 'electronpassword') {
+                if (admin) {
                     this.navigateTo('admin-tools');
                 }
                 break;
@@ -33,7 +37,11 @@ export class EntryComponent extends BaseComponent implements OnInit {
                 this.navigateTo('question');
                 break;
             case 'check':
-                this.navigateTo('check');
+                if (admin) {
+                    this.navigateTo('check');
+                }
+                break;
+            case 'correction':
                 break;
         }
     }
