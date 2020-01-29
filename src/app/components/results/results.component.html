@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1>Verifica del giorno {{ TODAY | date: 'dd/MM/yyyy'}}</h1>
+        <h1>Correzione Verifica</h1>
     </div>
 </div>
 <div class="container">
@@ -12,32 +12,19 @@
             </button>
         </div>
         <div class="col-3">
-            <input type="file" (change)="loadQFile($event)" />
-            Importa Domande
+            <input type="file" (change)="loadMarkFile($event)" />
+            Importa File
         </div>
-        <div class="col-3">
-            <input type="file" (change)="loadAFile($event)" />
-            Importa Risposte
-        </div>
-        <div class="col-3">
-            <input type="file" (change)="loadSAFile($event)" />
-            Risposte Studente
-        </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-primary" (click)="readFilesAndConfront()">
-                Calcola
-            </button>
-        </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-success" (click)="confirmMark()">
-                Conferma
+        <div class="col-2">
+            <button type="button" class="btn btn-primary" (click)="import()">
+                Mostra Correzione
             </button>
         </div>
     </div>
-    <ng-container *ngIf="questions && questions.length">
+    <ng-container *ngIf="finalMark && questionsAndAnswers && questionsAndAnswers.length">
         <div class="row">
             <div class="col-3">
-                <h3>Bonus: <input type="number" [(ngModel)]="adjustment" /></h3>
+                <h3>Bonus: {{adjustment}}</h3>
             </div>
             <div class="col-3">
                 <h3>Punteggio: {{points}} {{getStringifiedBonus()}}</h3>
@@ -51,56 +38,56 @@
         </div>
         <div class="row">
             <div class="col-3">
-                <h6>Verifica iniziata: {{getStringifiedHoursTime(studentAnswersObj.startTime)}}</h6>
+                <h6>Verifica iniziata: {{getStringifiedHoursTime(startTime)}}</h6>
             </div>
             <div class="col-3">
-                <h6>Verifica terminata: {{getStringifiedHoursTime(studentAnswersObj.endTime)}}</h6>
+                <h6>Verifica terminata: {{getStringifiedHoursTime(endTime)}}</h6>
             </div>
             <div class="col-3">
                 <h6>
                     Tempo impiegato:
-                    {{getStringifiedHoursTime(studentAnswersObj.endTime - studentAnswersObj.startTime, true)}}
+                    {{getStringifiedHoursTime(endTime - startTime, true)}}
                 </h6>
             </div>
             <div class="col-3">
-                <h6>Tempo massimo: {{questionsObj.expectedTime}} minuti</h6>
+                <h6>Tempo massimo: {{expectedTime}} minuti</h6>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <textarea [(ngModel)]="teacherExtraNotes"></textarea>
+                <p>{{teahcerExtraNotes}}</p>
             </div>
         </div>
-        <div class="row" *ngFor="let q of questions; let qIndex = index">
+        <div class="row" *ngFor="let qa of questionsAndAnswers; let qIndex = index">
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
-                        <h5> {{qIndex + 1}}) {{q.question}} </h5>
+                        <h5> {{qIndex + 1}}) {{qa.question.question}} </h5>
                     </div>
                 </div>
                 <div class="row">
-                    <div *ngIf="q.type === 'multi'" class="col-5">
+                    <div *ngIf="qa.question.type === 'multi'" class="col-5">
                         <div class="row">
-                            <div class="col-6" *ngFor="let a of q.answers; let aIndex = index">
+                            <div class="col-6" *ngFor="let a of qa.question.answers; let aIndex = index">
                                 <div class="alert" role="alert" [ngClass]="getAlertClass(qIndex, aIndex)">
                                     <span class="glyphicon" aria-hidden="true"
                                         [ngClass]="getGlyphiconClass(qIndex, aIndex)"></span>
                                     <span class="sr-only">Error:</span>
-                                    <h6> {{answers[qIndex].values[aIndex]}} | {{a}} </h6>
+                                    <h6> {{qa.answer.values[aIndex]}} | {{a}} </h6>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div [ngClass]="q.type === 'multi' ? 'col-5' : 'col-10'">
-                        <p> <b>Note dell'Insegnante:</b> {{answers[qIndex].teacherNotes}} </p>
+                    <div [ngClass]="qa.question.type === 'multi' ? 'col-5' : 'col-10'">
+                        <p> <b>Note dell'Insegnante:</b> {{qa.answer.teacherNotes}} </p>
                         <p>
-                            <b>{{q.type === 'multi' ? 'Note' : 'Risposta'}} dello Studente:</b>
-                            {{getStudentAnswerByQuestionId(q.id).notes}}
+                            <b>{{qa.question.type === 'multi' ? 'Note' : 'Risposta'}} dello Studente:</b>
+                            {{qa.studentAnswer.notes}}
                         </p>
                     </div>
                     <div class="col-2">
-                        <input type="number" [(ngModel)]="answerPoints[qIndex]" />
-                        {{q.type === 'open' ? ('/ ' + answers[qIndex].values[0]) : '' }}
+                        <b>{{qa.answerPoints}}</b>
+                        {{qa.question.type === 'open' ? ('/ ' + qa.answer.values[0]) : '' }}
                     </div>
                 </div>
                 <div class="row">
@@ -108,7 +95,7 @@
                         <h6>Correzioni extra</h6>
                     </div>
                     <div class="col-11">
-                        <textarea [(ngModel)]="correctionNotes[qIndex]"></textarea>
+                        <p>{{qa.correctionNotes}}</p>
                     </div>
                 </div>
             </div>

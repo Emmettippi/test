@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 
 import { JsonGetterService } from '../../services/json-getter.service';
+import { StandardService } from '../../services/standard.service';
 import { BaseComponent } from '../../services/basic.component';
 
 import { Question, Questions } from '../../entities/Question';
 import { StudentAnswer, StudentAnswers } from '../../entities/student-answer';
-import { StandardService } from 'src/app/services/standard.service';
 
 @Component({
     selector: 'question',

@@ -23,7 +23,7 @@ export class EntryComponent extends BaseComponent implements OnInit {
     ngOnInit() {
     }
 
-    onClickToNavigate(type: 'start' | 'read' | 'admin' | 'check' | 'correction') {
+    onClickToNavigate(type: 'start' | 'read' | 'admin' | 'check' | 'results') {
         const admin = this.hash(this.password) === this.HASH_PASSWORD;
         switch (type) {
             case 'admin':
@@ -41,7 +41,8 @@ export class EntryComponent extends BaseComponent implements OnInit {
                     this.navigateTo('check');
                 }
                 break;
-            case 'correction':
+            case 'results':
+                this.navigateTo('results');
                 break;
         }
     }

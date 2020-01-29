@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseComponent } from 'src/app/services/basic.component';
 import { forkJoin, Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
 
-import { JsonGetterService } from 'src/app/services/json-getter.service';
+import { JsonGetterService } from '../../services/json-getter.service';
+import { BaseComponent } from '../../services/basic.component';
 
-import { Question, Questions } from 'src/app/entities/Question';
-import { Answer, Answers } from 'src/app/entities/answer';
-import { StudentAnswer, StudentAnswers } from 'src/app/entities/student-answer';
-import { QuestionAnswer, FinalMark } from 'src/app/entities/final-mark';
+import { Question, Questions } from '../../entities/Question';
+import { Answer, Answers } from '../../entities/answer';
+import { StudentAnswer, StudentAnswers } from '../../entities/student-answer';
+import { QuestionAnswer, FinalMark } from '../../entities/final-mark';
 
 type MultiCheck = 'correct' | 'avoided' | 'wrong';
 
@@ -25,6 +25,7 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     studentAnswersObj: StudentAnswers;
     correctionNotes: string[];
     answerPoints: number[];
+    teacherExtraNotes: string;
 
     newQ: boolean;
     newA: boolean;
@@ -213,7 +214,7 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
         return ret;
     }
 
-    checkedCorrect(qIndex: number, aIndex: number): 'correct' | 'avoided' | 'wrong' {
+    checkedCorrect(qIndex: number, aIndex: number): MultiCheck {
         let correct: MultiCheck = 'wrong';
         if (this.answers[qIndex].values[aIndex] > 0
             && this.getStudentAnswerByQuestionId(this.questions[qIndex].id).answers[aIndex]) {
@@ -234,17 +235,20 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
             qa.answerPoints = this.answerPoints[qIndex];
             questionAnswers.push(qa);
         }
-        const finalMark = new FinalMark(
-            questionAnswers
-            , this.adjustment
-            , this.questionsObj.hash
-            , this.studentAnswersObj.startTime
-            , this.studentAnswersObj.endTime
-            , this.questionsObj.expectedTime
-            , this.studentAnswersObj.name
-            , this.mark
-        );
+
+        const finalMark = new FinalMark();
         finalMark.adjustment = this.adjustment;
+        finalMark.endTime = this.studentAnswersObj.endTime;
+        finalMark.expectedTime = this.questionsObj.expectedTime;
+        finalMark.mark = this.mark;
+        finalMark.name = this.studentAnswersObj.name;
+        finalMark.points = this.points - this.adjustment;
+        finalMark.questionAnswerHash = this.questionsObj.hash;
+        finalMark.questionsAndAnswers = questionAnswers;
+        finalMark.startTime = this.studentAnswersObj.startTime;
+        finalMark.teahcerExtraNotes = this.teacherExtraNotes;
+        finalMark.total = this.total;
+
         const str = JSON.stringify(finalMark);
         saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '-correzione.json');
     }

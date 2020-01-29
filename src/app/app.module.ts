@@ -9,6 +9,7 @@ import { EntryComponent } from './components/entry/entry.component';
 import { QuestionComponent } from './components/question/question.component';
 import { QuestionGeneratorComponent } from './components/question-generator/question-generator.component';
 import { CheckAnswersComponent } from './components/check-answer/check-answer.component';
+import { ResultsComponent } from './components/results/results.component';
 
 import { JsonGetterService } from './services/json-getter.service';
 import { StandardService } from './services/standard.service';
@@ -22,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
         , QuestionComponent
         , QuestionGeneratorComponent
         , CheckAnswersComponent
+        , ResultsComponent
     ],
     imports: [
         BrowserModule

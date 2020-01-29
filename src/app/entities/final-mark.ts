@@ -25,30 +25,27 @@ export class QuestionAnswer {
 export class FinalMark {
     name: string;
     mark: number;
+    points: number;
     adjustment: number;
-    questionAnswerHash: number;
+    total: number;
     startTime: number;
     endTime: number;
     expectedTime: number;
+    teahcerExtraNotes: string;
     questionsAndAnswers: QuestionAnswer[];
+    questionAnswerHash: number;
 
-    constructor(
-        questionsAndAnswers: QuestionAnswer[]
-        , adjustment: number
-        , questionAnswerHash: number
-        , startTime: number
-        , endTime: number
-        , expectedTime: number
-        , name: string
-        , mark: number
-    ) {
-        this.questionsAndAnswers = questionsAndAnswers;
-        this.adjustment = adjustment;
-        this.questionAnswerHash = questionAnswerHash;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.expectedTime = expectedTime;
-        this.name = name;
-        this.mark = mark;
+    constructor() {
+        this.name = null;
+        this.mark = null;
+        this.points = null;
+        this.adjustment = null;
+        this.total = null;
+        this.startTime = null;
+        this.endTime = null;
+        this.expectedTime = null;
+        this.teahcerExtraNotes = null;
+        this.questionsAndAnswers = [];
+        this.questionAnswerHash = null;
     }
 }
