@@ -20,7 +20,7 @@
                                     <span class="input-group-addon">
                                         <input type="checkbox" [(ngModel)]="studentAnswer.answers[aIndex]">
                                     </span>
-                                    <label class="form-control" (click)="markAnswer(aIndex)">{{a}}</label>
+                                    <label class="form-control" [title]="a" (click)="markAnswer(aIndex)">{{a}}</label>
                                 </div>
                             </div>
                         </ng-container>
