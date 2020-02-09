@@ -137,6 +137,13 @@ export class QuestionGeneratorComponent extends BaseComponent implements OnInit 
         ]).subscribe((subscription: Array<Questions | Answers>) => {
             this.questionsObj = <Questions>subscription[0];
             this.answersObj = <Answers>subscription[1];
+            let maxId: number;
+            for (const q of this.questions) {
+                if (!maxId || q.id > maxId) {
+                    maxId = q.id;
+                }
+            }
+            this.standardService.fixIds(maxId);
         }, (error) => {
             console.log(error);
         });

@@ -20,4 +20,9 @@ export class StandardService {
         this._questionId = 0;
         this._answerId = 0;
     }
+
+    fixIds(id: number) {
+        this._questionId = id;
+        this._answerId = id;
+    }
 }
