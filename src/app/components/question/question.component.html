@@ -39,8 +39,30 @@
             </div>
             <div class="row">
                 <div class="col-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" [(ngModel)]="showChronometer" />
+                        </span>
+                        <label class="form-control" [title]="a" (click)="showHideChrono()">Mostra cronometro:
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showChronometer">
+                <div class="col-12">
                     <div class="alert" role="alert" [ngClass]="getAlertClass()">
                         <h6>Tempo: {{getCronometer()}} / {{questionsObj.expectedTime}} min</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" [(ngModel)]="studentAnswer.suspended" />
+                        </span>
+                        <label class="form-control" [title]="a" (click)="suspend()">Risolvi più tardi:
+                        </label>
                     </div>
                 </div>
             </div>
@@ -63,7 +85,7 @@
                     </button>
                 </div>
                 <div *ngFor="let q of questions; let qIndex = index" class="col-4">
-                    <button type="button" class="btn" [ngClass]="qIndex === selected ? 'btn-secondary' : 'btn-default'"
+                    <button type="button" class="btn" [ngClass]="getQuestionBtnClass(qIndex)"
                         (click)="changeQuestion(qIndex)">
                         {{qIndex + 1}}
                     </button>

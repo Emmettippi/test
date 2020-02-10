@@ -26,6 +26,7 @@ export class QuestionComponent extends BaseComponent implements OnInit {
     expectedTimeInMillis: number;
 
     timer: any;
+    showChronometer: boolean;
     timePasswedInMillis: number;
 
     get questions(): Question[] {
@@ -55,6 +56,7 @@ export class QuestionComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.selected = 0;
         this.isLoaded = false;
+        this.showChronometer = true;
         this.jsonGetterService.getJSON('./assets/json/questions.json')
             .subscribe((subscription: Questions) => {
                 this.questionsObj = subscription;
@@ -84,6 +86,14 @@ export class QuestionComponent extends BaseComponent implements OnInit {
         this.selected = qIndex;
     }
 
+    showHideChrono() {
+        this.showChronometer = !this.showChronometer;
+    }
+
+    suspend() {
+        this.studentAnswer.suspended = !this.studentAnswer.suspended;
+    }
+
     markAnswer(aIndex: number) {
         this.studentAnswer.answers[aIndex] = !this.studentAnswer.answers[aIndex];
     }
@@ -95,6 +105,18 @@ export class QuestionComponent extends BaseComponent implements OnInit {
         return (timeAsDate.getHours() - 1)
             + ' : ' + (minutes < 10 ? '0' : '') + minutes
             + ' : ' + (seconds < 10 ? '0' : '') + seconds;
+    }
+
+    getQuestionBtnClass(qIndex: number): string {
+        let ret = '';
+        if (qIndex === this.selected) {
+            ret = 'btn-secondary';
+        } else if (this.studentAnswers[qIndex].suspended) {
+            ret = 'btn-warning';
+        } else {
+            ret = 'btn-default';
+        }
+        return ret;
     }
 
     save() {

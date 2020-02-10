@@ -1,5 +1,6 @@
 export class StudentAnswer {
     questionId: number;
+    suspended: boolean;
     answers: boolean[];
     notes: string;
     date: Date;
@@ -8,6 +9,7 @@ export class StudentAnswer {
         this.questionId = questionId;
         this.answers = [];
         this.notes = null;
+        this.suspended = false;
     }
 }
 
