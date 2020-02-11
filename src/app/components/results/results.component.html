@@ -79,11 +79,10 @@
                         </div>
                     </div>
                     <div [ngClass]="qa.question.type === 'multi' ? 'col-5' : 'col-10'">
-                        <p> <b>Note dell'Insegnante:</b> {{qa.answer.teacherNotes}} </p>
-                        <p>
-                            <b>{{qa.question.type === 'multi' ? 'Note' : 'Risposta'}} dello Studente:</b>
-                            {{qa.studentAnswer.notes}}
-                        </p>
+                        <p><b>Note dell'Insegnante:</b></p>
+                        <p style="white-space:pre-wrap;">{{qa.answer.teacherNotes}}</p>
+                        <p><b>{{qa.question.type === 'multi' ? 'Note' : 'Risposta'}} dello Studente:</b></p>
+                        <p style="white-space:pre-wrap;">{{qa.studentAnswer.notes}}</p>
                     </div>
                     <div class="col-2">
                         <b>{{qa.answerPoints}}</b>
@@ -95,7 +94,7 @@
                         <h6>Correzioni</h6>
                     </div>
                     <div class="col-11">
-                        <p>{{qa.correctionNotes}}</p>
+                        <p style="white-space:pre-wrap;">{{qa.correctionNotes}}</p>
                     </div>
                 </div>
             </div>
