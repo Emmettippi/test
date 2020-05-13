@@ -165,7 +165,7 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
                 }
 
                 this.correctionNotes = [];
-                this.answerPoints = []
+                this.answerPoints = [];
                 for (const q of this.questions) {
                     this.correctionNotes.push('');
                     this.answerPoints.push(0);
