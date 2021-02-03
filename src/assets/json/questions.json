@@ -1,1 +1,435 @@
-﻿{"questions":[{"id":1,"question":"Architettura N-Tier | Quali sono i 3 strati di un'architettura Three Tier?","type":"open","answers":[""]},{"id":2,"question":"MVC | In un'applicazione progettata secondo l'architettura \"Three-Tier\", cosa rappresenta il Server rispetto al pattern MVC?","type":"multi","answers":["Model","View","Controller","Nessuno dei 3"]},{"id":3,"question":"Rete | Cos'è una porta web?","type":"open","answers":[""]},{"id":4,"question":"Servlet | Le porte web 80 e 443 a quali protoclli di rete corrispondono? Aiutatevi con internet per questa risposta (non sono TCP/UPD)","type":"open","answers":[""]},{"id":5,"question":"Rete | A quale indirizzo di rete corrisponde \"localhost\"?","type":"multi","answers":["10.0.0.1","127.0.0.1","192.168.0.1","255.255.255.255"]},{"id":6,"question":"Rete | Quando chiamo un url, come separo l'indirizzo di rete dalla porta web?","type":"multi","answers":["Con lo slash. Es: 127.0.0.1/8080","Con il punto. Es: 127.0.0.1.8080","Col trattino: Es: 127.0.0.1-8080","Coi due punti: Es: 127.0.0.1:8080"]},{"id":7,"question":"HTTP | Scegli due dei metodi HTTP che conosci meglio tra GET, POST, PUT e DELETE e descrivi quando si usano","type":"open","answers":[""]},{"id":8,"question":"Troubleshooting | Se nel backend leggo che c'è un errore di NullPointerException, quale tra i seguenti codici errore mi verrà ritornato?","type":"multi","answers":["200","400","404","500"]},{"id":9,"question":"Trooubleshooting | In quali situazioni potrebbe venirmi ritornato il codice errore 401 Unauthorized? Usate pure internet per aiutarvi","type":"multi","answers":["Il server è andato in stack overflow","Non esiste la risorsa che sto cercando a database","Sto provando ad accedere ad una risorsa senza aver prima eseguito una login","La latenza tra la mia macchina e il server supera i 1000ms"]},{"id":10,"question":"Spring | Qual è l'annotazione spring che serve per catturare ls variabile dal seguente url? http://localhost:8080(MyWebApp/my-resource/{name}","type":"multi","answers":["@PathVariable(\"name\")","@RequestParam(\"name\")","@RequestBody","@GetMapping"]},{"id":12,"question":"JDBC | A cosa serve JDBC?","type":"multi","answers":["A far funzionare correttamente Spring","A connettere l'appplicazione Java al DB","A visualizzare correttamente i dati a front-end","A niente"]},{"id":11,"question":"JDBC | Cartella 12 => Qual è il metodo corretto che mi estrae da DB lo studente con un id passato dall'utente?","type":"multi","answers":["A","B","C","D"]},{"id":13,"question":"SQL | Scrivi una query che mi permetta di estrarre tutti gli studenti maggiorenni","type":"open","answers":[""]},{"id":14,"question":"SQL | Scrivi una query che mi permetta di modificare il nome di tutti gli studenti che si chiamano \"GVNN\" in \"Giovanni\". Query di questo genere vengono usate per ripulire alcuni dati sporchi a DB. Mi raccomando: usate gli apici ' per le stringhe, non le virgolette \"","type":"open","answers":[""]},{"id":15,"question":"SQL | Qual è la parola chiave SQL che permette di incrociare più tabelle?","type":"multi","answers":["FROM","JOIN","ON","CROSS"]},{"id":19,"question":"SQL | Qual è la corretta sintassi SQL che permette di modificare dei dati esistenti a database?","type":"multi","answers":["UPDATE table SET column = value WHERE condition","MODIFY table SET column AS value WHERE condition","EDIT table UPDATE column = value WHERE condition","SUBSTITUTE column AS value IN table WHERE condition"]},{"id":16,"question":"SQL | Che cos'è la SQL Injection?","type":"open","answers":[""]},{"id":20,"question":"SQL | Cartella 18 => Qual è la corretta query SQL che mi estrae nomi, cognomi ed età di tutti gli studenti della 4c?","type":"multi","answers":["A","B","C","D"]},{"id":17,"question":"html | Quali tra i seguenti metodi HTTP possono essere utilizzati nel submit del tag html \"form\"?","type":"multi","answers":["GET","POST","PUT","DELETE"]},{"id":18,"question":"Troubleshooting | A back-end ho mappato i seguenti controller. In ordine: il primo è mappato così: @GetMapping(\"/students/all\"). Il secondo è mappato così: @GetMapping(\"/students/{code}\"). Io chiamo un url che finisce con \"/students/10012\", in metodo POST. Supponendo che il prefisso del mio url sia corretto, che errore mi ritorna il back-end?","type":"multi","answers":["Ambiguous mapping","404 not found","Method not allowed","Nessuno"]},{"id":21,"question":"SpringBoot | Qual è una delle caratteristiche di Springboot che Spring non possiede?","type":"multi","answers":["I Controller (@Controller)","La DispatcherServlet","Niente","Un main"]},{"id":22,"question":"Application.properties | Apri il file application.properties: su quale porta web verrà avviato il nostro application server?","type":"open","answers":[""]},{"id":23,"question":"RestController | Cosa ritorna un @RestController?","type":"multi","answers":["Una parte del path per una pagina web da ritornare al front-end","Un url","Un oggetto Json","Una stringa criptata non leggibile"]},{"id":24,"question":"JSON | Quali di questi oggetti json possiede una proprietà chiamata \"nome\" di valore \"Giovanni\"?","type":"multi","answers":["{ name: \"Giovanni\" }","{ \"name\": \"Giovanni\" }","name: \"Giovanni\"","{ \"Giovanni\" as name }"]},{"id":25,"question":"JSON | Qual è la sintassi Json per indicare un array (vuoto)?","type":"multi","answers":["null","[ ]","[ null ]","{ }"]},{"id":26,"question":"JSON | Cartella 26 => Quali di questi file possiede un'errata sintassi json?","type":"multi","answers":["A","B","C","D"]},{"id":36,"question":"JSON | Cartella 27 => Quali di questi oggetti JSON può essere ritonato da un controller chiamato \"findAllStudentByNameContainingOrderById\"? Passo come argomento in input name = \"va\"","type":"multi","answers":["A","B","C","D"]},{"id":27,"question":"JPA | Qual è la Keyword JPA che mi permette di estrarre dati con la colonna \"MyColumn\" maggiore di un numero passato? \"MyColumn\" è il nome della mia colonna.","type":"multi","answers":["findByMyColumnBiggerThan","findByMyColumnBigger","findByMyColumnLessThan","findByMyColumnGreaterThan"]},{"id":28,"question":"JPA | Che cosa può ritornare il seguente metodo JPA (2 risposte sono corrette)? public Country findByCode(String code);","type":"multi","answers":["null","Una Country","Una lista di Country","Non compila perché la sintassi JPA è errata"]},{"id":29,"question":"Fondamenti | Quali tra i seguenti sono tipi primitivi Java?","type":"multi","answers":["Object","byte","Short","integer","long","Float","Double","char","String","boolean"]},{"id":30,"question":"Fondamenti | Quanti byte occupa a sistema una variabile di tipo short?","type":"multi","answers":["1","2","4","8"]},{"id":31,"question":"Fondamenti | È possibile assegnare una variabile di tipo long ad una variabile di tipo int?","type":"multi","answers":["Sì, perché entrambi fanno riferimento allo stesso insieme numerico matematico","Sì, perché una variabile int è più piccola di una long","No, perché non è possibile assegnare valori decimali a numeri interi","No, perché non è possibile assegnare un valore di 8 byte ad una variabile più piccola"]},{"id":32,"question":"Complemento a 2 | Completa la seguente frase: \"Possiamo trovare l'opposto negativo di un numero binario positivo...\"","type":"multi","answers":["... invertendo i suoi bit","... invertendo i suoi bit e togliendo 1","... invertendo i suoi bit e aggiungendo 1","... invertendo i suoi bit tranne quello meno significativo (l'ultimo)"]},{"id":33,"question":"Fondamenti | Quali sono le 3 parti delle variabili di tipo float e double?","type":"open","answers":[""]},{"id":34,"question":"Fondamenti | Quali tra queste sono proprietà di una List<T>? (Più risposte sono corrette)","type":"multi","answers":["Può contenere più istanze dello stesso oggetto","Può essere ciclato (è un Iterable<T>)","Gli elementi al suo interno non sono indicizzati","È una classe che implementa l'interfaccia ArrayList<T>"]},{"id":35,"question":"Fondamenti | Perché conviene immaginare un array multidimensionale con la visione \"matrioska\" rispetto alla classica visione tridimensionale del piano-cartesiano?","type":"open","answers":[""]},{"id":37,"question":"Fondamenti | Qual è il sistema corretto per fare il confronto di ugualianza tra due variabili \"a\" e \"b\" di tipo Long?","type":"multi","answers":["Non è possibile","a = b","a == b","a.equals(b)"]},{"id":38,"question":"Fondamenti | Qual è il sistema corretto per fare il confronto di ugualianza tra due variabili \"a\" e \"b\" di tipo long?","type":"multi","answers":["Non è possibile","a = b","a == b","a.equals(b)"]},{"id":39,"question":"Fondamenti | Qual è la parola chiave che serve a forzare l'uscita da un ciclo?","type":"multi","answers":["break;","continue;","return;","exit;"]},{"id":40,"question":"----Algoritmo | Cartella 40 => Se come numero in input passo 20, qual è l'output di questo algoritmo?","type":"multi","answers":["18","180","328,6666666","630"]}],"hash":959892410,"expectedTime":120}
+﻿{
+    "questions": [
+        {
+            "id": 1,
+            "question": "SpringBoot | Qual è una delle caratteristiche di Springboot che Spring non possiede?",
+            "type": "multi",
+            "answers": [
+                "I Controller (@Controller)",
+                "La DispatcherServlet",
+                "Niente",
+                "Un main"
+            ]
+        },
+        {
+            "id": 2,
+            "question": "SpringBoot | A quale path si riferisce la parola chiave \"classpath\" dell'annotazione @PropertySource (classe Application.java)?",
+            "type": "multi",
+            "answers": [
+                "src/main/java/",
+                "src/main/resources/",
+                "src/test/java/",
+                "src/main/webapp/"
+            ]
+        },
+        {
+            "id": 3,
+            "question": "Spring | A cosa serve il comando \"mvn clean install\"?",
+            "type": "multi",
+            "answers": [
+                "Ad installare le librerie dichiarate nel pom.xml",
+                "Ad installare il maven wrapper",
+                "Ad installare maven",
+                "Ad formattare il pom.xml"
+            ]
+        },
+        {
+            "id": 5,
+            "question": "Application.properties | Tra le variabili di configurazone che abbiamo visto, \"server.port\" a cosa serve?",
+            "type": "multi",
+            "answers": [
+                "Variabile obbligatoria, serve a cambiare la porta di default del Tomcat",
+                "Variabile opzionale, serve a cambiare la porta di default del Tomcat",
+                "Variabile obbligatoria, serve ad indicare la porta con cui connettersi al server Mysql",
+                "Variabile opzionale, serve ad indicare la porta con cui connettersi al server Mysql"
+            ]
+        },
+        {
+            "id": 6,
+            "question": "RestController | Cosa ritorna un @RestController?",
+            "type": "multi",
+            "answers": [
+                "Una parte del path per una pagina web da ritornare al front-end",
+                "Un url",
+                "Un oggetto Json",
+                "Niente"
+            ]
+        },
+        {
+            "id": 7,
+            "question": "Json | Qual è la sintassi Json per indicare un oggetto (vuoto)?",
+            "type": "multi",
+            "answers": [
+                "\"key\": \"\"",
+                "\"key\": null",
+                "{} (parentesi graffe)",
+                "[] (parentesi quadre)"
+            ]
+        },
+        {
+            "id": 8,
+            "question": "Json | Qual è la sintassi Json per indicare un array (vuoto)?",
+            "type": "multi",
+            "answers": [
+                "\"key\": \"\"",
+                "\"key\": null",
+                "{} (parentesi graffe)",
+                "[] (parentesi quadre)"
+            ]
+        },
+        {
+            "id": 9,
+            "question": "Json | Qual è la sintassi Json per indicare una proprietà senza valore?",
+            "type": "multi",
+            "answers": [
+                "\"key\": \"\"",
+                "\"key\": null",
+                "{} (parentesi graffe)",
+                "[] (parentesi quadre)"
+            ]
+        },
+        {
+            "id": 10,
+            "question": "Json | Cartella 9 => Quali di questi file possiede un'errata sintassi json? È richiesta la motivazione alla risposta.",
+            "type": "multi",
+            "answers": [
+                "A.txt",
+                "B.txt",
+                "C.txt",
+                "D.txt"
+            ]
+        },
+        {
+            "id": 11,
+            "question": "Json + JPA | Cartella 10 => Quali di questi oggetti json può essere ritornato dal controller findByNameStartingWithOrderById() in CountryController?",
+            "type": "multi",
+            "answers": [
+                "A.json",
+                "B.json",
+                "C.json",
+                "D.json"
+            ]
+        },
+        {
+            "id": 12,
+            "question": "JPA | Qual è la Keyword JPA che mi permette di filtrare per un valore che dev'essere null? \"MyColumn\" è il nome della mia colonna.",
+            "type": "multi",
+            "answers": [
+                "findByMyColumnIsNotNull",
+                "findByMyColumnNull",
+                "findByMyColumnIsNull",
+                "findWhereMyColumnNull"
+            ]
+        },
+        {
+            "id": 13,
+            "question": "JPA | Quali di questi metodi JPA mi ritornano una lista di valori correttamente ordinata per id crescente?",
+            "type": "multi",
+            "answers": [
+                "findByOrderById",
+                "findByOrderByIdAsc",
+                "findByOrderByIdDesc",
+                "findOrderById"
+            ]
+        },
+        {
+            "id": 14,
+            "question": "JPA | Dove si trova la configurazione spring che dice di implementare l'interfaccia CountryRepository?",
+            "type": "multi",
+            "answers": [
+                "Da nessuna parte: è Springboot che riconosce l'annotazione @Repository e la implementa",
+                "In un file application.properties con impostazioni custom complesse",
+                "In un file javascript di front-end",
+                "In un file xml che non abbiamo visto"
+            ]
+        },
+        {
+            "id": 15,
+            "question": "JPA | In una classe annotata con @Entity e @Table, quante proprietà possono essere annotate con @Id?",
+            "type": "multi",
+            "answers": [
+                "Una o nessuna",
+                "Almeno una",
+                "Una e una sola",
+                "Nessuna"
+            ]
+        },
+        {
+            "id": 16,
+            "question": "JPA | A cosa corrispondono le classi parametriche dell'interfaccia JpaRepository? (vedi CountryRepository) ",
+            "type": "multi",
+            "answers": [
+                "L'interfaccia JpaRepository non possiede classi parametriche",
+                "La prima alla @Entity legata, la seconda ad una classe a scelta",
+                "La prima all'@Id, la seconda alla @Entity legata",
+                "La prima alla @Entity legata, la seconda all'@Id"
+            ]
+        },
+        {
+            "id": 17,
+            "question": "JPA | Che cosa può ritornare il seguente metodo JPA? public Country findByCode(String code);",
+            "type": "multi",
+            "answers": [
+                "Non compila perché la sintassi JPA è errata",
+                "Una Country",
+                "Una lista di Country",
+                "null"
+            ]
+        },
+        {
+            "id": 18,
+            "question": "Codifica | Quali tra i seguenti sono tipi primitivi Java?",
+            "type": "multi",
+            "answers": [
+                "long",
+                "byte",
+                "Object",
+                "Integer",
+                "String",
+                "char",
+                "Double",
+                "Float",
+                "Number",
+                "short"
+            ]
+        },
+        {
+            "id": 19,
+            "question": "Codifica | int a = 0; Quali tra le seguenti righe di codice darà errore? È richiesta la motivazione alla risposta",
+            "type": "multi",
+            "answers": [
+                "double b = a;",
+                "long b = a;",
+                "int b = a;",
+                "short b = a;"
+            ]
+        },
+        {
+            "id": 20,
+            "question": "Codifica | Supponiamo esista un tipo base java \"little\" che a memoria occupa 1 byte e che serva a rappresentare degli interi allo stesso identico modo per short, int e long. Qual è il range di valori che una variabile di tipo little potrebbe assumere?",
+            "type": "multi",
+            "answers": [
+                "-127 ~ +128",
+                "-128 ~ +127",
+                "-255 ~ +256",
+                "-256 ~ +255",
+                "0 ~ 255"
+            ]
+        },
+        {
+            "id": 27,
+            "question": "Codifica | Facendo riferimento al tipo little della domanda precedente, mi sapresti dire come vengono salvati in memoria i valori 18 e -18? I due valori sono separati da \" | \"",
+            "type": "multi",
+            "answers": [
+                "00010010 | 11101101",
+                "00010010 | 11101110",
+                "00010100 | 11101100",
+                "00010100 | 11101011"
+            ]
+        },
+        {
+            "id": 21,
+            "question": "Codifica | Quali valori può assumere una variabile di tipo \"boolean\"?",
+            "type": "multi",
+            "answers": [
+                "undefined",
+                "null",
+                "true",
+                "false"
+            ]
+        },
+        {
+            "id": 22,
+            "question": "Codifica | Quali valori può assumere una variabile di tipo \"Boolean\"?",
+            "type": "multi",
+            "answers": [
+                "undefined",
+                "null",
+                "true",
+                "false"
+            ]
+        },
+        {
+            "id": 23,
+            "question": "Codifica | Quali tra le seguenti assegnazioni è valida? Durante la correzione dovrai spiegare perché le altre assegnazioni non sono valide.",
+            "type": "multi",
+            "answers": [
+                "byte b = null;",
+                "char c = 65;",
+                "int a = 65.0;",
+                "boolean flag = 0;"
+            ]
+        },
+        {
+            "id": 24,
+            "question": "Codifica | Nelle variabili di tipo float e double, cos'è la mantissa?",
+            "type": "multi",
+            "answers": [
+                "Mantissa è un sinonimo di esponente",
+                "È la parte intera del numero rappresentato dalla variabile",
+                "È la parte decimale del numero rappresentato dalla variabile",
+                "È quella parte che viene moltiplicata per 2^ESPONENTE per generare il numero rappresentato della variabile "
+            ]
+        },
+        {
+            "id": 25,
+            "question": "Fondamenti | Che cos'è ArrayList<>() a livello di codice Java?",
+            "type": "multi",
+            "answers": [
+                "Una classe java che implementa l'interfaccia List<T>",
+                "Un'interfaccia java che estende l'interfaccia List<T>",
+                "Una classe java che implementa la classe Set<T>",
+                "Una classe java che estende la classe List<T>"
+            ]
+        },
+        {
+            "id": 26,
+            "question": "Fondamenti | Quali tra queste sono proprietà di un Set<T>?",
+            "type": "multi",
+            "answers": [
+                "Può contenere più istanze dello stesso oggetto",
+                "Può essere ciclato (è un Iterable<T>)",
+                "Gli elementi al suo interno sono ordinati e indicizzati",
+                "Offre un metodo .add(T item) che permette di inserire un nuovo elemento nel Set"
+            ]
+        },
+        {
+            "id": 28,
+            "question": "Fondamenti | Perché conviene immaginare un array multidimensionale con la visione \"matrioska\" rispetto alla classica visione \"piano-cartesiano\"?",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 29,
+            "question": "Fondamenti | Ho dichiarato una classe java GenericClass<T extends Number>. Quando inizializzo la classe, quali tra le seguenti inizializzazioni non compilano?",
+            "type": "multi",
+            "answers": [
+                "GenericClass<short> gc = new GenericClass<>();",
+                "GenericClass<Long> gc = new GenericClass<>();",
+                "GenericClass<Byte> gc = new GenericClass<>();",
+                "GenericClass<Character> gc = new GenericClass<>();"
+            ]
+        },
+        {
+            "id": 30,
+            "question": "Fondamenti | Cartella 29 => Il file occurrence.txt possiede un metodo che mi ritorna le occorrenze di un numero passato in input rispetto alla lista di numeri in input. Supponiamo che chiami quel metodo passando come argomenti i seguenti valori: [3, 5, 7, 3, 19, -2, 53, -3, 3, 18]; 3. Cosa ritorna il metodo findOccurrences()? ",
+            "type": "multi",
+            "answers": [
+                "0",
+                "1",
+                "3",
+                "10"
+            ]
+        },
+        {
+            "id": 31,
+            "question": "Algoritmi | Cartella 30 => Che errori può tirare il codice scritto nel file maximum.txt?",
+            "type": "multi",
+            "answers": [
+                "Memory Heap Exception",
+                "Out of Bound Exception",
+                "Null Pointer Exception",
+                "Nessuno"
+            ]
+        },
+        {
+            "id": 32,
+            "question": "Algoritmi | Ho creato un metodo throwDice() che replica perfettamente un lancio di dado, ritornandomi un numero compreso tra 1 e 6 estremi inclusi. Ho chiamato 3 volte questo metodo e tutte e 3 le volte mi ha ritornato 3. Lo chiamo una 4a volta: qual è la probabilità che mi ritorni nuovamente 3?",
+            "type": "multi",
+            "answers": [
+                "1 su 1",
+                "1 su 6",
+                "1 su 36",
+                "1 su 216"
+            ]
+        },
+        {
+            "id": 33,
+            "question": "Algoritmi | Cartella 32 => Leggi il codice scritto all'interno del file print.txt. Supponendo che in input avresti un array di 3 dimensioni rispettivamente 5, 5 e 5 (quindi un cubo), quante volte verrebbe eseguita la stampa dell'asterisco?",
+            "type": "multi",
+            "answers": [
+                "5",
+                "25",
+                "125",
+                "625"
+            ]
+        },
+        {
+            "id": 34,
+            "question": "Algoritmi | Cartella 33 => Il codice scritto all'interno del file sort.txt dovrebbe ordinare l'array in modo crescente tramite l'algoritmo dei cicli fissi smezzati (non ottimizzato), ma c'è un errore nel codice. Sai dirmi dove e perché?",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 35,
+            "question": "Algoritmi | Scrivi un algoritmo che, dato in input un numero intero, mi permetta di ritornare una stringa con le seguenti caratteristiche: 1, la stringa dev'essere di lunghezza pari al numero passato; 2, la stringa deve contenere più ripetizioni della stringa \"abcdefghijklmnopqrstuvwxyz\" (l'alfabeto minuscolo). Si presuppone che il numero in input sia positivo. Esempi: input 3, ouput \"abc\"; input 27, output \"abcdefghijklmnopqrstuvwxyza\". Suggerimenti: utilizzate l'operazione per trovare il resto. Per prendere la lettera immediatamente successiva di una variabile myChar di tipo char si può fare \"myChar++\".",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 36,
+            "question": "Algoritmi | Scrivi un algoritmo che, data in input una stringa e una sequenza di caratteri, mi ritorni la somma delle volte in cui occorrenze di quei caratteri appaiono all'interno di quella stringa.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 37,
+            "question": "Algoritmi | Scrivi un algoritmo che, data in input una stringa e un carattere, mi ritorni una stringa che termini alla prima occorrenza del carattere passato, questo incluso. Se non si presenta alcuna occorrenza di quel carattere, ritorno tutta la stringa. Esempio: \"Ciao\", 'a' => \"Cia\".",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 38,
+            "question": "Algoritmi | Scrivi un algoritmo che, dati in input due numeri interi, mi ritorni una lista contenente tutti i valori compresi tra quei due numeri, estremi esclusi. Se il primo numero è minore del secondo, l'ordine dei numeri nell'array dev'essere crescente, altrimenti dev'essere decrescente. Suggerimento: conviene l'utilizzo di un ciclo while.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 39,
+            "question": "Ti ricordi? | Qual è la query sql corretta che mi permette di eliminare uno studente dal DB passando un id?",
+            "type": "multi",
+            "answers": [
+                "SELECT * FROM student WHERE id = :id;",
+                "DELETE FROM student WHERE id = 12;",
+                "DELETE * FROM student WHERE id = :id;",
+                "DELETE FROM student WHERE id = :id"
+            ]
+        },
+        {
+            "id": 40,
+            "question": "Ti ricordi? | A back-end ho mappato due metodi nello stesso controller. In ordine, il primo è mappato con l'annotazione @PostMapping(\"/country\"), mentre il secondo con l'annotazione @GetMapping(\"/country\"). Ho chiamato un url che termina con \"/country\", metodo POST. Supponendo che il prefisso del mio url sia corretto, che errore mi ritorna il back-end?",
+            "type": "multi",
+            "answers": [
+                "Ambigous Mapping",
+                "404 Not Found",
+                "Method not Allowed",
+                "Nessuno"
+            ]
+        },
+        {
+            "id": 41,
+            "question": "Ti ricordi? | Cosa scrivo nell'url se voglio che il backend mi prenda in input un id sotto forma di RequestParam? I 3 puntini di sospensione indicano che il prefisso del mio url sia corretto",
+            "type": "multi",
+            "answers": [
+                ".../my-path/my-url&id=21",
+                ".../my-path/my-url?id=21",
+                ".../my-path/my-url/id/21",
+                ".../my-path/my-url/21/id"
+            ]
+        }
+    ],
+    "hash": 555381358,
+    "expectedTime": 120
+}
