@@ -1,3 +1,4 @@
+import { StandardService } from './../../services/standard.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -57,9 +58,10 @@ export class ResultsComponent extends BaseComponent implements OnInit {
 
     constructor(
         private jsonGetterService: JsonGetterService
+        , standardService: StandardService
         , router: Router
     ) {
-        super(router);
+        super(router, standardService);
     }
 
     ngOnInit() {

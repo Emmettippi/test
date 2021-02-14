@@ -47,10 +47,10 @@ export class QuestionComponent extends BaseComponent implements OnInit {
 
     constructor(
         private jsonGetterService: JsonGetterService
-        , private standardService: StandardService
+        , standardService: StandardService
         , router: Router
     ) {
-        super(router);
+        super(router, standardService);
     }
 
     ngOnInit() {
@@ -113,6 +113,8 @@ export class QuestionComponent extends BaseComponent implements OnInit {
             ret = 'btn-secondary';
         } else if (this.studentAnswers[qIndex].suspended) {
             ret = 'btn-warning';
+        } else if (this.darkTheme) {
+            ret = 'btn-info';
         } else {
             ret = 'btn-default';
         }

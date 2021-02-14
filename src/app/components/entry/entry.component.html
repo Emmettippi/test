@@ -36,6 +36,15 @@
             <li>
                 Password: <input type="password" [(ngModel)]="password" />
             </li>
+            <li>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="checkbox" [(ngModel)]="darkTheme" />
+                    </span>
+                    <label class="form-control" (click)="darkTheme = !darkTheme">Tema scuro
+                    </label>
+                </div>
+            </li>
         </ul>
     </div>
 </div>

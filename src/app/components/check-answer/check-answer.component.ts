@@ -1,3 +1,4 @@
+import { StandardService } from './../../services/standard.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
@@ -88,8 +89,9 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
     constructor(
         private jsonGetterService: JsonGetterService
         , router: Router
+        , standardService: StandardService
     ) {
-        super(router);
+        super(router, standardService);
     }
 
     ngOnInit() {

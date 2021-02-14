@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class StandardService {
 
+    public darkTheme = true;
+
     private _questionId: number;
     private _answerId: number;
 

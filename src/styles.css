@@ -4,6 +4,15 @@
 	background-color: white;
 }
 
+.dark-theme {
+	background-color: #333333;
+    color: white;
+}
+
+.jumbotron {
+    color: black !important;
+}
+
 .btn {
 	width: 100%;
 }

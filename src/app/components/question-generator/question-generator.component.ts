@@ -59,10 +59,10 @@ export class QuestionGeneratorComponent extends BaseComponent implements OnInit 
 
     constructor(
         private jsonGetterService: JsonGetterService
-        , private standardService: StandardService
+        , standardService: StandardService
         , router: Router
     ) {
-        super(router);
+        super(router, standardService);
     }
 
     ngOnInit() {

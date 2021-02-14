@@ -1,10 +1,20 @@
+import { StandardService } from './standard.service';
 import { Router } from '@angular/router';
 
 export class BaseComponent {
     readonly TODAY = new Date();
 
+    get darkTheme(): boolean {
+        return this.standardService.darkTheme;
+    }
+
+    set darkTheme(value: boolean) {
+        this.standardService.darkTheme = value;
+    }
+
     constructor(
-        private router: Router
+        protected router: Router
+        , protected standardService: StandardService
     ) { }
 
     navigateTo(path: string) {

@@ -1,3 +1,4 @@
+import { StandardService } from './../../services/standard.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,8 +13,9 @@ export class RulesComponent extends BaseComponent implements OnInit {
 
     constructor(
         router: Router
+        , standardService: StandardService
     ) {
-        super(router);
+        super(router, standardService);
     }
 
     ngOnInit() {
