@@ -1,0 +1,280 @@
+﻿{
+    "questions": [
+        {
+            "id": 1,
+            "question": "CAMBIO DI BASE | Riscrivi in base binaria il numero 56",
+            "type": "multi",
+            "answers": [
+                "111000",
+                "11100",
+                "110000",
+                "111100"
+            ]
+        },
+        {
+            "id": 2,
+            "question": "CAMBIO DI BASE | Riscrivi in base decimale il numero BBB_16",
+            "type": "multi",
+            "answers": [
+                "2002",
+                "888",
+                "2235",
+                "3003"
+            ]
+        },
+        {
+            "id": 3,
+            "question": "COMPLEMENTO A 2 | Qual è il valore del numero -45 rappresentato da una variabile di tipo byte?",
+            "type": "multi",
+            "answers": [
+                "0010 1101",
+                "1010 1101",
+                "1101 0011",
+                "1110 1011"
+            ]
+        },
+        {
+            "id": 4,
+            "question": "PRIMITIVI | Quali sono i primitivi grandi esattamente 4 byte?",
+            "type": "multi",
+            "answers": [
+                "byte",
+                "short",
+                "int",
+                "long",
+                "float",
+                "double",
+                "char",
+                "boolean"
+            ]
+        },
+        {
+            "id": 5,
+            "question": "PRIMITIVI | Data una variabile \"a\" di tipo \"long\" e una variabile \"b\" di tipo \"float\", perché è possibile la linea di codice \"b = a;\" senza casting diretto (cioè senza \"b = (float) a\") nonostante le variabili float siano di dimensioni minori rispetto alle long?",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 6,
+            "question": "PRIMITIVI | Data una variabile \"a\" di tipo \"int\", qual è la differenza tecnica tra \"a++\" e \"++a\"?",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 7,
+            "question": "IF | Data una variabile \"a\" di tipo \"int\", descrivi quando l'istruzione \"if (a) { ... } else { ... }\" entra nell'if e quando nell'else",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 8,
+            "question": "SWITCH | Descrivi i 2 casi in cui il codice di uno switch entra nel \"default\"",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 9,
+            "question": "WHILE | Quali tra le seguenti porzioni di codice presenta un ciclo sicuramente infinito? (una sola risposta corretta)",
+            "type": "multi",
+            "answers": [
+                "while (a || !a) { a = !a; }",
+                "while (b && !b) { b = !b; }",
+                "while (c > 0) { c++; }",
+                "while (d != 0) { d=0; }"
+            ]
+        },
+        {
+            "id": 10,
+            "question": "FOR | \"for(A; B; C) { D }\": descrivi logicamente C in questa sintassi. Esempio: \"D è la porzione di codice che viene ripetuta all'interno del ciclo for\"",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 11,
+            "question": "OPERATORI LOGICI | Data l'espressione booleana \"(A || B) && (A || C) && (B || C)\", con quali valori questa ritorna \"true\"? Una sola risposta corretta",
+            "type": "multi",
+            "answers": [
+                "A=true, B=false, C=false",
+                "A=false, B=false, C=true",
+                "A=false, B=true, C=false",
+                "A=true, B=false, C=true"
+            ]
+        },
+        {
+            "id": 12,
+            "question": "METODI | Scrivi l'header di un metodo privato che, dati in input due numeri interi, ritorni un oggetto di tipo MyObject.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 13,
+            "question": "METODI | Scrivi l'header di un metodo pubblico di una classe Country il cui scopo è quello di modiciare il nome della nazione.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 14,
+            "question": "ARRAY | Scrivi l'header di un ciclo for che mi permetta di ciclare tra gli elementi di un array al contrario",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 15,
+            "question": "ARRAY | Leggi il codice nel file 15.txt. Supponendo di passare al metodo myMethod un array di lunghezza 15 con all'interno i valori [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], cosa verrà ritornato?",
+            "type": "multi",
+            "answers": [
+                "12",
+                "39",
+                "24",
+                "27"
+            ]
+        },
+        {
+            "id": 16,
+            "question": "ARRAY | Riscrivi il seguente header di un ciclo for sotto forma di ciclo while: \"for (int i = 0; i < array.length; i++) { ... }\". Usa i puntini di sospensione per il blocco del codice da ciclare",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 17,
+            "question": "STATIC | Posso chiamare un metodo o una variabile statica all'interno di un metodo non statico? Perché?",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 18,
+            "question": "FINAL | Descrivi il funzionamento della keyword \"final\" e quando va utilizzata. Fai un esempio con del codice errato.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 19,
+            "question": "INTERFACCE | Tra i file della cartella 19, qual è quello con la dichiarazione di un'interfaccia e la sua corretta implementazione?",
+            "type": "multi",
+            "answers": [
+                "19A.txt",
+                "19B.txt",
+                "19C.txt",
+                "19D.txt"
+            ]
+        },
+        {
+            "id": 20,
+            "question": "INTERFACCE | Definisci perché il codice \"List<Integer> myIntList = new List<>();\" è sbagliato, poi correggilo.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 21,
+            "question": "CLASSI ASTRATTE | Sapendo che A è una classe astratta e B è una classe, quale tra le seguenti dichiarazioni è corretta?",
+            "type": "multi",
+            "answers": [
+                "public class A implements B",
+                "public class B implements A",
+                "public class B extends A",
+                "public class B extends abstract A"
+            ]
+        },
+        {
+            "id": 22,
+            "question": "JAVA | Dichiaro una classe denominata A e la lascio vuota. Come mai un oggetto di tipo A (costruito con \"A a = new A();\") presenta il metodo \"toString()\" (quindi \"a.toString()\")?",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 23,
+            "question": "LIST | Qual è la differenza principale tra una List e un array? A parte la sintassi, la differenza principale sta nelle loro \"dimensioni\"",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 24,
+            "question": "FILE | Definisci la differenza tra \"percorso relativo\" e \"percorso assoluto\", spiegando quale dei due è sempre da utilizzare all'interno di un progetto.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 25,
+            "question": "OVERRIDE | Definisci l'override e fai un esempio.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 26,
+            "question": "OVERLOAD | La classe \"java.lang.Math\" offre dei metodi statici. Definisci l'overload e fai un esempio di overload tra questi metodi.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 27,
+            "question": "CODICE | Leggi il codice presente nel file 27.txt e segna il valore che ritorna quando l'argomento \"a\" vale 20.",
+            "type": "multi",
+            "answers": [
+                "18",
+                "16",
+                "13",
+                "9"
+            ]
+        },
+        {
+            "id": 28,
+            "question": "CODICE | Scrivi (anche in pseudo-codice) un metodo pubblico che, dato come argomento un array di long, mi venga ritornato il valore maggiore di quell'array. Per questa domanda e le domande a seguire considera sempre valori non null e con almeno un elemento.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 29,
+            "question": "CODICE | Scrivi (anche in pseudo-codice) un metodo pubblico che, dato come argomento un array di double, mi venga ritornato quell'array sottoforma di lista di stringhe",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        },
+        {
+            "id": 30,
+            "question": "CODICE | Scrivi (anche in pseudo-codice) un metodo pubblico che, dato come argomento un array di long, mi ritorni una lista contenente due liste: la prima lista contiene i numeri positivi o uguali a 0 dell'array passato come argomento, la seconda contenga invece i valori negativi.",
+            "type": "open",
+            "answers": [
+                ""
+            ]
+        }
+    ],
+    "hash": 1797451233,
+    "expectedTime": 150
+}
