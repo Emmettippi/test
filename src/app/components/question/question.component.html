@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1>Verifica di Recupero del giorno {{ TODAY | date: 'dd/MM/yyyy'}}</h1>
+        <h1>Verifica del giorno {{ TODAY | date: 'dd/MM/yyyy'}}</h1>
     </div>
 </div>
 <div class="container" *ngIf="isLoaded">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div [ngClass]="question.type === 'multi' ? 'col-4' : 'col-12'">
-                    <textarea [(ngModel)]="studentAnswer.notes"></textarea>
+                    <textarea [(ngModel)]="studentAnswer.notes" [rows]="5"></textarea>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
             <div class="row" *ngIf="showChronometer">
                 <div class="col-12">
                     <div class="alert" role="alert" [ngClass]="getAlertClass()">
-                        <h6>Tempo: {{getCronometer()}} / {{questionsObj.expectedTime}} min</h6>
+                        <h6>Tempo: {{timerStr}} / {{questionsObj.expectedTime}} min</h6>
                     </div>
                 </div>
             </div>

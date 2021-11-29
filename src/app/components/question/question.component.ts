@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 
@@ -8,13 +8,14 @@ import { BaseComponent } from '../../services/basic.component';
 
 import { Question, Questions } from '../../entities/Question';
 import { StudentAnswer, StudentAnswers } from '../../entities/student-answer';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
     selector: 'question',
     templateUrl: './question.component.html',
     styleUrls: ['./question.component.css']
 })
-export class QuestionComponent extends BaseComponent implements OnInit {
+export class QuestionComponent extends BaseComponent implements OnInit, OnDestroy {
 
     selected: number;
     questionsObj: Questions;
@@ -25,9 +26,10 @@ export class QuestionComponent extends BaseComponent implements OnInit {
 
     expectedTimeInMillis: number;
 
-    timer: any;
+    updateChronoTimer: Subscription;
     showChronometer: boolean;
-    timePasswedInMillis: number;
+    timePassedInMillis: number;
+    timerStr: string;
 
     get questions(): Question[] {
         return this.questionsObj.questions;
@@ -74,9 +76,12 @@ export class QuestionComponent extends BaseComponent implements OnInit {
                     this.studentAnswers.push(sa);
                 }
 
-                this.timer = setInterval(() => {
-                    this.timePasswedInMillis = new Date().getTime() - this.studentAnswersObj.startTime;
-                });
+                this.updateChronoTimer = timer(0, 10).subscribe(() => {
+                    this.timePassedInMillis = new Date().getTime() - this.studentAnswersObj.startTime;
+                    this.timerStr = this.getCronometer();
+                }); /*setInterval(() => {
+                    this.timePassedInMillis = new Date().getTime() - this.studentAnswersObj.startTime;
+                });*/
 
                 this.isLoaded = true;
             });
@@ -99,7 +104,7 @@ export class QuestionComponent extends BaseComponent implements OnInit {
     }
 
     getCronometer(): string {
-        const timeAsDate = new Date(this.timePasswedInMillis);
+        const timeAsDate = new Date(this.timePassedInMillis);
         const minutes = timeAsDate.getMinutes();
         const seconds = timeAsDate.getSeconds();
         return (timeAsDate.getHours() - 1)
@@ -122,11 +127,16 @@ export class QuestionComponent extends BaseComponent implements OnInit {
     }
 
     save() {
-        const studentAnswersObj = this.studentAnswersObj;
-        const endTime = (new Date()).getTime();
-        studentAnswersObj.endTime = endTime;
-        const str = JSON.stringify(studentAnswersObj);
-        saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '.json');
+        if (!this.studentAnswersObj.name
+            || !this.studentAnswersObj.name.trim()) {
+            alert('Inserisci il nome!');
+        } else {
+            const studentAnswersObj = this.studentAnswersObj;
+            const endTime = (new Date()).getTime();
+            studentAnswersObj.endTime = endTime;
+            const str = JSON.stringify(studentAnswersObj);
+            saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '.json');
+        }
     }
 
     back() {
@@ -146,5 +156,11 @@ export class QuestionComponent extends BaseComponent implements OnInit {
             ret = 'alert-danger';
         }
         return ret;
+    }
+
+    ngOnDestroy() {
+        if (this.updateChronoTimer) {
+            this.updateChronoTimer.unsubscribe();
+        }
     }
 }
