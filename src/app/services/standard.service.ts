@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Questions } from '../entities/question';
 
 @Injectable()
 export class StandardService {
 
     public darkTheme = true;
+
+    public questions: Questions
 
     private _questionId: number;
     private _answerId: number;

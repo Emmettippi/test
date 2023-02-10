@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { saveAs } from 'file-saver';
-import { forkJoin } from 'rxjs';
+import * as FileSaver from 'file-saver';
 
 import { BaseComponent } from '../../services/basic.component';
 import { JsonGetterService } from '../../services/json-getter.service';
 import { StandardService } from '../../services/standard.service';
 
-import { Question, Questions } from '../../entities/Question';
+import { Question, Questions } from '../../entities/question';
 import { Answer, Answers } from '../../entities/answer';
 
 @Component({
@@ -131,10 +130,10 @@ export class QuestionGeneratorComponent extends BaseComponent implements OnInit 
     }
 
     import() {
-        forkJoin([
-            this.jsonGetterService.getJSON(this.questionsFile['path'])
-            , this.jsonGetterService.getJSON(this.answersFile['path'])
-        ]).subscribe((subscription: Array<Questions | Answers>) => {
+        Promise.all([
+            this.jsonGetterService.readFileAsJson(this.questionsFile)
+            , this.jsonGetterService.readFileAsJson(this.answersFile)
+        ]).then((subscription: Array<any>) => {
             this.questionsObj = <Questions>subscription[0];
             this.answersObj = <Answers>subscription[1];
             let maxId: number;
@@ -158,9 +157,9 @@ export class QuestionGeneratorComponent extends BaseComponent implements OnInit 
         answersObj.hash = hash;
 
         const strQ = JSON.stringify(questionsObj);
-        saveAs(new Blob([strQ], { type: 'text/csv;charset=UTF-8' }), 'questions.json');
+        FileSaver.saveAs(new Blob([strQ], { type: 'text/csv;charset=UTF-8' }), 'questions.json');
 
         const strA = JSON.stringify(answersObj);
-        saveAs(new Blob([strA], { type: 'text/csv;charset=UTF-8' }), 'answers.json');
+        FileSaver.saveAs(new Blob([strA], { type: 'text/csv;charset=UTF-8' }), 'answers.json');
     }
 }

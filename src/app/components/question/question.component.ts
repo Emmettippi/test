@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { saveAs } from 'file-saver';
+import * as FileSaver from 'file-saver';
 
 import { JsonGetterService } from '../../services/json-getter.service';
 import { StandardService } from '../../services/standard.service';
 import { BaseComponent } from '../../services/basic.component';
 
-import { Question, Questions } from '../../entities/Question';
+import { Question, Questions } from '../../entities/question';
 import { StudentAnswer, StudentAnswers } from '../../entities/student-answer';
 import { Subscription, timer } from 'rxjs';
 
@@ -59,32 +59,29 @@ export class QuestionComponent extends BaseComponent implements OnInit, OnDestro
         this.selected = 0;
         this.isLoaded = false;
         this.showChronometer = true;
-        this.jsonGetterService.getJSON('./assets/json/questions.json')
-            .subscribe((subscription: Questions) => {
-                this.questionsObj = subscription;
-                this.expectedTimeInMillis = this.questionsObj.expectedTime * 60000;
-                const startTime = (new Date()).getTime();
-                this.studentAnswersObj = new StudentAnswers('', startTime, 0, []);
-                for (const q of this.questions) {
-                    const sa = new StudentAnswer(q.id);
-                    const answers = new Array<boolean>();
-                    for (const a of q.answers) {
-                        answers.push(false);
-                    }
-                    sa.answers = answers;
+        this.questionsObj = this.standardService.questions;
+        this.expectedTimeInMillis = this.questionsObj.expectedTime * 60000;
+        const startTime = (new Date()).getTime();
+        this.studentAnswersObj = new StudentAnswers('', startTime, 0, []);
+        for (const q of this.questions) {
+            const sa = new StudentAnswer(q.id);
+            const answers = new Array<boolean>();
+            for (const a of q.answers) {
+                answers.push(false);
+            }
+            sa.answers = answers;
 
-                    this.studentAnswers.push(sa);
-                }
+            this.studentAnswers.push(sa);
+        }
 
-                this.updateChronoTimer = timer(0, 10).subscribe(() => {
-                    this.timePassedInMillis = new Date().getTime() - this.studentAnswersObj.startTime;
-                    this.timerStr = this.getCronometer();
-                }); /*setInterval(() => {
+        this.updateChronoTimer = timer(0, 10).subscribe(() => {
+            this.timePassedInMillis = new Date().getTime() - this.studentAnswersObj.startTime;
+            this.timerStr = this.getCronometer();
+        }); /*setInterval(() => {
                     this.timePassedInMillis = new Date().getTime() - this.studentAnswersObj.startTime;
                 });*/
 
-                this.isLoaded = true;
-            });
+        this.isLoaded = true;
     }
 
     changeQuestion(qIndex: number) {
@@ -135,7 +132,7 @@ export class QuestionComponent extends BaseComponent implements OnInit, OnDestro
             const endTime = (new Date()).getTime();
             studentAnswersObj.endTime = endTime;
             const str = JSON.stringify(studentAnswersObj);
-            saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '.json');
+            FileSaver.saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '.json');
         }
     }
 

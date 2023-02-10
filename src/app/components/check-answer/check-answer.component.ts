@@ -1,13 +1,12 @@
 import { StandardService } from './../../services/standard.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
-import { saveAs } from 'file-saver';
+import * as FileSaver from 'file-saver';
 
 import { JsonGetterService } from '../../services/json-getter.service';
 import { BaseComponent } from '../../services/basic.component';
 
-import { Question, Questions } from '../../entities/Question';
+import { Question, Questions } from '../../entities/question';
 import { Answer, Answers } from '../../entities/answer';
 import { StudentAnswer, StudentAnswers } from '../../entities/student-answer';
 import { QuestionAnswer, FinalMark } from '../../entities/final-mark';
@@ -88,8 +87,8 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
 
     constructor(
         private jsonGetterService: JsonGetterService
-        , router: Router
-        , standardService: StandardService
+        , protected router: Router
+        , protected standardService: StandardService
     ) {
         super(router, standardService);
     }
@@ -139,21 +138,21 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
         this.studentAnswersFile = event.target.files.item(0);
     }
 
-    getStudentAnswerByQuestionId(questionId: number): StudentAnswer {
+    getStudentAnswerByQuestionId(questionId: number): StudentAnswer | null {
         return this.studentAnswers.find(sa => sa.questionId === questionId) || null;
     }
 
     readFilesAndConfront() {
-        const observables = new Array<Observable<any>>();
-        observables.push(this.jsonGetterService.getJSON(this.studentAnswersFile['path']));
+        const promises = new Array<Promise<any>>();
+        promises.push(this.jsonGetterService.readFileAsJson(this.studentAnswersFile));
         if (this.newQ) {
-            observables.push(this.jsonGetterService.getJSON(this.questionsFile['path']));
+            promises.push(this.jsonGetterService.readFileAsJson(this.questionsFile));
         }
         if (this.newA) {
-            observables.push(this.jsonGetterService.getJSON(this.answersFile['path']));
+            promises.push(this.jsonGetterService.readFileAsJson(this.answersFile));
         }
-        forkJoin(observables)
-            .subscribe((subscription: Array<Questions | Answers | StudentAnswers>) => {
+        Promise.all(promises)
+            .then((subscription: Array<any>) => {
                 this.studentAnswersObj = <StudentAnswers>subscription[0];
                 if (this.newQ || this.newA) {
                     if (this.newQ && this.newA) {
@@ -252,6 +251,6 @@ export class CheckAnswersComponent extends BaseComponent implements OnInit {
         finalMark.total = this.total;
 
         const str = JSON.stringify(finalMark);
-        saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '-correzione.json');
+        FileSaver.saveAs(new Blob([str], { type: 'text/csv;charset=UTF-8' }), this.studentAnswersObj.name + '-correzione.json');
     }
 }

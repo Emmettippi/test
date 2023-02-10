@@ -14,10 +14,14 @@
                 </button>
             </li>
             <li>
+                <input type="file" (change)="loadQFile($event)" />
+                Importa Domande
+            </li>
+            <!-- <li>
                 <button type="button" class="btn btn-light" (click)="onClickToNavigate('read')">
                     Regolamento e modalità di valutazione
                 </button>
-            </li>
+            </li> -->
             <li>
                 <button type="button" class="btn btn-primary" (click)="onClickToNavigate('results')">
                     Visualizza correzione

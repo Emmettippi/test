@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var environment_1 = require("./../src/environments/environment");
 var electron_1 = require("electron");
 var path = require("path");
 var url = require("url");
@@ -11,13 +10,11 @@ function createWindow() {
         height: 720
     });
     win.loadURL(url.format({
-        pathname: path.join(__dirname, "/../../../dist/test/index.html"),
+        pathname: path.join(__dirname, "/../../dist/test/index.html"),
         protocol: 'file:',
         slashes: true,
     }));
-    if (environment_1.environment.production) {
-        win.setMenu(null);
-    }
+    // win.setMenu(null);
     win.on('closed', function () {
         win = null;
     });

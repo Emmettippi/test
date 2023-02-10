@@ -72,10 +72,10 @@ export class ResultsComponent extends BaseComponent implements OnInit {
     }
 
     import() {
-        this.jsonGetterService.getJSON(this.finalMarkFile['path'])
-            .subscribe((subscription: FinalMark) => {
-                this.finalMark = subscription;
-            }, (error) => {
+        this.jsonGetterService.readFileAsJson(this.finalMarkFile)
+            .then((subscription: any) => {
+                this.finalMark = <FinalMark>subscription;
+            }).catch((error: any) => {
                 console.log(error);
             });
     }
@@ -105,7 +105,7 @@ export class ResultsComponent extends BaseComponent implements OnInit {
         return ret;
     }
 
-    isNotes(qIndex): boolean {
+    isNotes(qIndex: number): boolean {
         return !!this.questionsAndAnswers[qIndex].studentAnswer.notes;
     }
 

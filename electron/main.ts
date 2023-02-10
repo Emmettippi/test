@@ -12,13 +12,13 @@ function createWindow() {
 
     win.loadURL(
         url.format({
-            pathname: path.join(__dirname, `/../../../dist/test/index.html`),
+            pathname: path.join(__dirname, `/../../dist/test/index.html`),
             protocol: 'file:',
             slashes: true,
         })
     );
 
-    win.setMenu(null);
+    // win.setMenu(null);
 
     win.on('closed', () => {
         win = null;

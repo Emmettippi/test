@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BaseComponent } from '../../services/basic.component';
+import { JsonGetterService } from 'src/app/services/json-getter.service';
+import { Questions } from 'src/app/entities/question';
 
 @Component({
     selector: 'entry',
@@ -15,13 +17,21 @@ export class EntryComponent extends BaseComponent implements OnInit {
     readonly HASH_PASSWORD = -194417027;
 
     constructor(
-        router: Router
-        , standardService: StandardService
+        protected router: Router
+        , protected standardService: StandardService
+        , private jsonService: JsonGetterService
     ) {
         super(router, standardService);
     }
 
     ngOnInit() {
+    }
+
+    loadQFile(event: any) {
+        const file = event.target.files.item(0);
+        this.jsonService.readFileAsJson(file).then((jackson) => {
+            this.standardService.questions = <Questions>jackson;
+        });
     }
 
     onClickToNavigate(type: 'start' | 'read' | 'admin' | 'check' | 'results') {

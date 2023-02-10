@@ -1,4 +1,4 @@
-import { Question } from './Question';
+import { Question } from './question';
 import { Answer } from './answer';
 import { StudentAnswer } from './student-answer';
 
