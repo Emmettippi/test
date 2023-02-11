@@ -16,6 +16,10 @@ export class EntryComponent extends BaseComponent implements OnInit {
 
     readonly HASH_PASSWORD = -194417027;
 
+    get standardServicePub() {
+        return this.standardService;
+    }
+
     constructor(
         protected router: Router
         , protected standardService: StandardService

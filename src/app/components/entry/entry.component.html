@@ -9,7 +9,8 @@
     <div class="row">
         <ul>
             <li>
-                <button type="button" class="btn btn-success" (click)="onClickToNavigate('start')">
+                <button type="button" class="btn btn-success" [disabled]="!standardServicePub.questions"
+                    (click)="onClickToNavigate('start')">
                     Inizia
                 </button>
             </li>

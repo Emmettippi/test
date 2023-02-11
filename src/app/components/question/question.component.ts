@@ -126,7 +126,7 @@ export class QuestionComponent extends BaseComponent implements OnInit, OnDestro
     save() {
         if (!this.studentAnswersObj.name
             || !this.studentAnswersObj.name.trim()) {
-            alert('Inserisci il nome!');
+            return;
         } else {
             const studentAnswersObj = this.studentAnswersObj;
             const endTime = (new Date()).getTime();
